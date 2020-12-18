@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {DrawerActions} from '@react-navigation/native';
+import {DrawerActions, NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {ThemeType} from '../types';
 import {SideBar} from '../components';
@@ -24,11 +24,13 @@ const getHeaderStyle = (currentTheme: ThemeType) => ({
 
 export function PublicRoutes() {
   return (
-    <Drawer.Navigator
-      drawerPosition="right"
-      drawerContent={(props) => <SideBar {...props} />}>
-      <Drawer.Screen name="stack" component={MainStack} />
-    </Drawer.Navigator>
+    <NavigationContainer>
+      <Drawer.Navigator
+        drawerPosition="right"
+        drawerContent={(props) => <SideBar {...props} />}>
+        <Drawer.Screen name="stack" component={MainStack} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 

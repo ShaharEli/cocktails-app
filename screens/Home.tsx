@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {SafeAreaView, Image} from 'react-native';
+import styled from 'styled-components';
 
 export function Home() {
-  return (
-    <View>
-      <Text></Text>
-    </View>
-  );
+  return <HomeContainer></HomeContainer>;
 }
+
+const HomeContainer = styled(SafeAreaView)`
+  flex: 1;
+`;
