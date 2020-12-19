@@ -8,11 +8,10 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import {BASE_API_URL, MAX_WIDTH} from '../helpers';
-import {CocktailCard} from '../components';
+import {CocktailCard, CocktailSkelaton} from '../components';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 import {ICocktail} from '../types';
-import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 
 export function Home({navigation}: {navigation: any}) {
   const [searchText, setSearchText] = useState<string>('');
@@ -68,24 +67,7 @@ export function Home({navigation}: {navigation: any}) {
             <Title>
               {searchedCocktails.length} Search results for {searchText}:
             </Title>
-            {loading && (
-              <SkeletonContent
-                isLoading={loading}
-                animationDirection="horizontalLeft"
-                boneColor="grey"
-                highlightColor="#333333"
-                containerStyle={{
-                  flex: 1,
-                  height: 250,
-                  backgroundColor: '#121212',
-                  width: MAX_WIDTH,
-                }}
-                layout={[
-                  {width: 200, height: 20, marginLeft: 6, marginTop: 10},
-                  {width: MAX_WIDTH, height: 200, marginTop: 10},
-                ]}
-              />
-            )}
+            {loading && <CocktailSkelaton />}
             {searchedCocktails.map((cocktail: ICocktail) => (
               <CocktailCard
                 key={cocktail.idDrink}
@@ -101,8 +83,10 @@ export function Home({navigation}: {navigation: any}) {
                 While you thinking what cocktail you want heres random cocktail
               </Title>
             </TouchableOpacity>
-            {randomCocktail && (
+            {randomCocktail ? (
               <CocktailCard cocktail={randomCocktail} navigation={navigation} />
+            ) : (
+              <CocktailSkelaton />
             )}
           </View>
         )}
