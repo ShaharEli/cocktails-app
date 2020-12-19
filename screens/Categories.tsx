@@ -6,25 +6,32 @@ import {ICategorie} from '../types';
 import styled from 'styled-components';
 import {Info} from '../components';
 
-export function Categories({navigation}: {navigation: any}) {
-  const [categories, setCategories] = useState<ICategorie[]>([]);
-
+export function Categories({navigation, route}: {navigation: any; route: any}) {
+  const [categories, setCategories] = useState<string[]>([]);
+  const {query}: {query: string} = route.params;
   useEffect(() => {
     (async () => {
-      const {data: cocktailsCategories} = await axios.get(
-        `${BASE_API_URL}/list.php?c=list`,
-      );
-      setCategories(cocktailsCategories.drinks);
+      try {
+        const {
+          data: {drinks: cocktailsCategories},
+        } = await axios.get(`${BASE_API_URL}/list.php?${query}=list`);
+        const newValues: string[] = [];
+        for (let item of cocktailsCategories) {
+          //@ts-ignore
+          newValues.push(Object.values(item)[0]);
+        }
+        setCategories(newValues);
+      } catch {}
     })();
-  }, []);
+  }, [query]);
 
   return (
     <CategoriesContainer>
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
         {categories &&
-          categories.map(({strCategory: category}) => (
+          categories.map((category: string) => (
             <Info
-              query="c"
+              query={query}
               navigation={navigation}
               info={category}
               key={category}

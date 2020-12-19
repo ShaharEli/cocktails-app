@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Switch} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
+import IconTwo from 'react-native-vector-icons/FontAwesome5';
 import {SafeAreaView, View, TouchableOpacity, Text} from 'react-native';
 import {ThemeContext} from '../helpers';
 
@@ -35,7 +36,17 @@ export function SideBar({navigation}: {navigation: any}) {
     currentTheme === 'dark' ? 'white' : 'black';
 
   const handleNavigation = (route: string): void => {
-    navigation.navigate(route);
+    switch (route) {
+      case 'Categories':
+        navigation.navigate('Categories', {query: 'c'});
+        break;
+      case 'Glasses':
+        navigation.navigate('Categories', {query: 'g'});
+        break;
+      default:
+        navigation.navigate(route);
+        break;
+    }
   };
 
   return (
@@ -56,6 +67,14 @@ export function SideBar({navigation}: {navigation: any}) {
       <RouteLink onPress={() => handleNavigation('Categories')}>
         <Icon size={28} name="grid" color={getRouteIconColor()} />
         <RouteLinkText>Categories</RouteLinkText>
+      </RouteLink>
+      <RouteLink onPress={() => handleNavigation('Glasses')}>
+        <IconTwo
+          size={28}
+          name="glass-martini-alt"
+          color={getRouteIconColor()}
+        />
+        <RouteLinkText>Glasses Categories</RouteLinkText>
       </RouteLink>
     </SideBarContainer>
   );

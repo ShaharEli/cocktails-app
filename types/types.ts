@@ -41,5 +41,6 @@ export interface ICocktail {
 }
 
 export interface ICategorie {
-  strCategory: string;
+  strCategory?: string;
+  strGlass?: string;
 }

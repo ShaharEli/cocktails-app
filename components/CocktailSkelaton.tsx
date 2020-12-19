@@ -17,7 +17,7 @@ export function CocktailSkelaton() {
       containerStyle={{
         flex: 1,
         height: 300,
-        backgroundColor: isDark ? '#121212' : 'f0efeb',
+        backgroundColor: isDark ? '#003847' : '#f0efeb',
         width: MAX_WIDTH,
         marginTop: 30,
       }}
