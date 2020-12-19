@@ -18,6 +18,7 @@ import {useRecoilState} from 'recoil';
 import {themeState} from './atoms';
 import {StatusBar, SafeAreaView, Image} from 'react-native';
 import styled, {ThemeProvider} from 'styled-components';
+import {Loading} from './components/Loading';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -39,24 +40,22 @@ const App = () => {
     })();
   }, []);
 
-  return loading ? (
-    <LoadingContainer>
-      <LoadingGif source={require('./helpers/loading.gif')} />
-    </LoadingContainer>
-  ) : (
-    <Provider>
-      <ThemeProvider theme={() => theme(currentTheme)}>
-        <PublicRoutes />
-      </ThemeProvider>
-    </Provider>
+  return (
+    <>
+      <StatusBar
+        backgroundColor={currentTheme === 'light' ? '#CCCCCC' : '#20232A'}
+      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Provider>
+          <ThemeProvider theme={() => theme(currentTheme)}>
+            <PublicRoutes />
+          </ThemeProvider>
+        </Provider>
+      )}
+    </>
   );
 };
 
 export default App;
-
-const LoadingContainer = styled(SafeAreaView)`
-  flex: 1;
-`;
-const LoadingGif = styled(Image)`
-  flex: 1;
-`;
