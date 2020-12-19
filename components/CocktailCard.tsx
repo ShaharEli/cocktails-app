@@ -52,7 +52,7 @@ const StyledTitle = styled(Title)`
 `;
 
 const StyledCard = styled(Card)`
-  background-color: ${({theme}) => theme.colors.sideBar};
+  background-color: ${({theme}) => theme.colors.card};
   margin-bottom: 25px;
 `;
 

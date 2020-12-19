@@ -7,7 +7,6 @@ export function CocktailSkelaton() {
   const {currentTheme} = useContext(ThemeContext);
 
   const isDark: boolean = currentTheme === 'dark';
-  console.log(isDark);
 
   return (
     <SkeletonContent

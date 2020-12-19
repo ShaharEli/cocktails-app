@@ -68,7 +68,12 @@ export function Home({navigation}: {navigation: any}) {
               {!loading && searchedCocktails.length} Search results for{' '}
               {searchText}:
             </Title>
-            {loading && <CocktailSkelaton />}
+            {loading && (
+              <>
+                <CocktailSkelaton />
+                <CocktailSkelaton />
+              </>
+            )}
             {searchedCocktails.map((cocktail: ICocktail) => (
               <CocktailCard
                 key={cocktail.idDrink}
