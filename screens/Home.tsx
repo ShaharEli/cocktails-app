@@ -7,14 +7,16 @@ import {
   Text,
 } from 'react-native';
 import styled from 'styled-components';
-import {BASE_API_URL} from '../helpers';
+import {BASE_API_URL, MAX_WIDTH} from '../helpers';
 import {CocktailCard} from '../components';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 import {ICocktail} from '../types';
+import SkeletonContent from 'react-native-skeleton-content-nonexpo';
 
 export function Home({navigation}: {navigation: any}) {
   const [searchText, setSearchText] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const [randomCocktail, setRandomCocktail] = useState<ICocktail | null>(null);
   const [searchedCocktails, setSearchedCocktails] = useState<ICocktail[]>([]);
 
@@ -27,12 +29,16 @@ export function Home({navigation}: {navigation: any}) {
 
   const handleSearchCocktail = useCallback(
     async (search: string): Promise<void> => {
+      setLoading(true);
       try {
         const {data: cocktails} = await axios.get(
           `${BASE_API_URL}/search.php?s=${search}`,
         );
-        setSearchedCocktails(cocktails.drinks);
-      } catch {}
+        setSearchedCocktails(cocktails?.drinks || []);
+      } catch {
+      } finally {
+        setLoading(false);
+      }
     },
     [],
   );
@@ -62,6 +68,24 @@ export function Home({navigation}: {navigation: any}) {
             <Title>
               {searchedCocktails.length} Search results for {searchText}:
             </Title>
+            {loading && (
+              <SkeletonContent
+                isLoading={loading}
+                animationDirection="horizontalLeft"
+                boneColor="grey"
+                highlightColor="#333333"
+                containerStyle={{
+                  flex: 1,
+                  height: 250,
+                  backgroundColor: '#121212',
+                  width: MAX_WIDTH,
+                }}
+                layout={[
+                  {width: 200, height: 20, marginLeft: 6, marginTop: 10},
+                  {width: MAX_WIDTH, height: 200, marginTop: 10},
+                ]}
+              />
+            )}
             {searchedCocktails.map((cocktail: ICocktail) => (
               <CocktailCard
                 key={cocktail.idDrink}
