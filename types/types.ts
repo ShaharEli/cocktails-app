@@ -39,3 +39,7 @@ export interface ICocktail {
   strMeasure14: string | null;
   strMeasure15: string | null;
 }
+
+export interface ICategorie {
+  strCategory: string;
+}
