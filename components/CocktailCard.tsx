@@ -1,8 +1,8 @@
 import React from 'react';
-import {Card, Title, Paragraph, Chip} from 'react-native-paper';
+import {Card, Title, Chip} from 'react-native-paper';
 import styled from 'styled-components';
-import {MAX_WIDTH} from '../helpers';
 import {ICocktail} from '../types';
+import {View} from 'react-native';
 
 export function CocktailCard({
   cocktail,
@@ -18,27 +18,23 @@ export function CocktailCard({
     <StyledCard onPress={handleNavigation}>
       <Card.Content>
         <StyledTitle>{cocktail.strDrink}</StyledTitle>
-        <Paragraph>
-          {/* @ts-ignore */}
+        <ChipContainer>
           {cocktail.strCategory && (
-            <Chip
-              style={chipStyle}
-              mode="outlined"
-              icon="format-list-bulleted-type">
+            // @ts-ignore
+            <Chip mode="outlined" icon="format-list-bulleted-type">
               {cocktail.strCategory}
             </Chip>
           )}
-          {/* @ts-ignore */}
           {cocktail.strAlcoholic && (
-            <Chip style={chipStyle} mode="outlined" icon="glass-cocktail">
+            // @ts-ignore
+            <Chip mode="outlined" icon="glass-cocktail">
               {cocktail.strAlcoholic}
             </Chip>
           )}
-          {/* @ts-ignore */}
-        </Paragraph>
+        </ChipContainer>
       </Card.Content>
-      {/* @ts-ignore */}
       {cocktail.strDrinkThumb && (
+        // @ts-ignore
         <StyledCocktailCover source={{uri: cocktail.strDrinkThumb}} />
       )}
     </StyledCard>
@@ -55,9 +51,12 @@ const StyledTitle = styled(Title)`
   color: ${({theme}) => theme.colors.font};
 `;
 
-const chipStyle = {width: MAX_WIDTH * 0.4, overflow: 'hidden', margin: 20};
-
 const StyledCard = styled(Card)`
   background-color: ${({theme}) => theme.colors.sideBar};
   margin-bottom: 25px;
+`;
+
+const ChipContainer = styled(View)`
+  flex-direction: row;
+  justify-content: space-around;
 `;
