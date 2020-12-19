@@ -41,6 +41,7 @@ export function Cocktail({navigation, route}: {navigation: any; route: any}) {
   };
   return (
     <CocktailContainer>
+      {/* @ts-ignore */}
       <ScrollView contentContainerStyle={ScrollViewStyle}>
         {cocktail && (
           <>

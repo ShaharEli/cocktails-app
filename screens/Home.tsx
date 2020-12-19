@@ -9,17 +9,19 @@ import {
 import styled from 'styled-components';
 import {BASE_API_URL} from '../helpers';
 import {CocktailCard} from '../components';
+import {TextInput} from 'react-native-paper';
 import axios from 'axios';
+import {ICocktail} from '../types';
 
 export function Home({navigation}: {navigation: any}) {
   const [searchText, setSearchText] = useState<string>('');
-  const [randomCocktail, setRandomCocktail] = useState<any>(null);
-  const [searchedCocktails, setSearchedCocktails] = useState<any[]>([]);
+  const [randomCocktail, setRandomCocktail] = useState<ICocktail | null>(null);
+  const [searchedCocktails, setSearchedCocktails] = useState<ICocktail[]>([]);
 
   const handleFetchRandomCocktail = useCallback(async (): Promise<void> => {
     try {
       const {data: cocktail} = await axios.get(`${BASE_API_URL}/random.php`);
-      setRandomCocktail(cocktail);
+      setRandomCocktail(cocktail.drinks[0]);
     } catch {}
   }, []);
 
@@ -29,7 +31,7 @@ export function Home({navigation}: {navigation: any}) {
         const {data: cocktails} = await axios.get(
           `${BASE_API_URL}/search.php?s=${search}`,
         );
-        setSearchedCocktails(cocktails);
+        setSearchedCocktails(cocktails.drinks);
       } catch {}
     },
     [],
@@ -40,12 +42,32 @@ export function Home({navigation}: {navigation: any}) {
       await handleFetchRandomCocktail();
     })();
   }, []);
+  console.log(searchedCocktails);
+
+  const handleSearch = async (search: string) => {
+    setSearchText(search);
+    await handleSearchCocktail(search);
+  };
 
   return (
     <HomeContainer>
+      <StyledInput
+        label="Search drink"
+        value={searchText}
+        onChangeText={(text) => handleSearch(text)}
+      />
       <ScrollView>
         {searchText ? (
-          <Title></Title>
+          <>
+            <Title></Title>
+            {searchedCocktails.map((cocktail: ICocktail) => (
+              <CocktailCard
+                key={cocktail.idDrink}
+                cocktail={cocktail}
+                navigation={navigation}
+              />
+            ))}
+          </>
         ) : (
           <View>
             <TouchableOpacity onPress={handleFetchRandomCocktail}>
@@ -54,10 +76,7 @@ export function Home({navigation}: {navigation: any}) {
               </Title>
             </TouchableOpacity>
             {randomCocktail && (
-              <CocktailCard
-                cocktail={randomCocktail.drinks[0]}
-                navigation={navigation}
-              />
+              <CocktailCard cocktail={randomCocktail} navigation={navigation} />
             )}
           </View>
         )}
@@ -75,4 +94,9 @@ const Title = styled(Text)`
 const HomeContainer = styled(SafeAreaView)`
   flex: 1;
   background-color: ${({theme}) => theme.colors.background};
+`;
+
+const StyledInput = styled(TextInput)`
+  background-color: grey;
+  margin-top: 20px;
 `;
