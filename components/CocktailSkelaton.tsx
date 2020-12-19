@@ -19,6 +19,7 @@ export function CocktailSkelaton() {
         height: 300,
         backgroundColor: isDark ? '#121212' : 'f0efeb',
         width: MAX_WIDTH,
+        marginTop: 30,
       }}
       layout={[
         {width: 200, height: 20, marginLeft: 6, marginTop: 10},

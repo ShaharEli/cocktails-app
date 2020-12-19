@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView} from 'react-native';
 import axios from 'axios';
 import {BASE_API_URL} from '../helpers';
 import {ICategorie} from '../types';
@@ -23,7 +23,12 @@ export function Categories({navigation}: {navigation: any}) {
       <ScrollView contentContainerStyle={{alignItems: 'center'}}>
         {categories &&
           categories.map(({strCategory: category}) => (
-            <Info navigation={navigation} info={category} key={category} />
+            <Info
+              query="c"
+              navigation={navigation}
+              info={category}
+              key={category}
+            />
           ))}
       </ScrollView>
     </CategoriesContainer>

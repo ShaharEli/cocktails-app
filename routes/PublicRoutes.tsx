@@ -5,7 +5,7 @@ import {DrawerActions, NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {ThemeType} from '../types';
 import {SideBar} from '../components';
-import {Home, Cocktail, Categories} from '../screens';
+import {Home, Cocktail, Categories, CocktailsList} from '../screens';
 import {ThemeContext} from '../helpers';
 
 const Stack = createStackNavigator();
@@ -66,6 +66,17 @@ const MainStack = () => {
         component={Categories}
         options={({navigation}) => ({
           title: 'Categories',
+          ...getHeaderStyle(currentTheme),
+          headerRight: () => (
+            <Hamburger navigation={navigation} theme={currentTheme} />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="CocktailsList"
+        component={CocktailsList}
+        options={({navigation}) => ({
+          title: 'List of cocktails',
           ...getHeaderStyle(currentTheme),
           headerRight: () => (
             <Hamburger navigation={navigation} theme={currentTheme} />

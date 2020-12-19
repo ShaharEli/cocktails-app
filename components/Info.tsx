@@ -2,9 +2,24 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import styled from 'styled-components';
 
-export function Info({info, navigation}: {info: string; navigation: any}) {
+export function Info({
+  info,
+  navigation,
+  query,
+}: {
+  info: string;
+  navigation: any;
+  query: string;
+}) {
+  const handleNavigation = (): void => {
+    navigation.navigate('CocktailsList', {
+      query,
+      info: info.split(' ').join('_'),
+    });
+  };
+
   return (
-    <InfoContainer>
+    <InfoContainer onPress={handleNavigation}>
       <StyledText>{info}</StyledText>
     </InfoContainer>
   );
