@@ -1,48 +1,62 @@
 import React from 'react';
 import {Card, Title, Paragraph, Chip} from 'react-native-paper';
 import styled from 'styled-components';
-import {Text} from 'react-native';
 import {MAX_WIDTH} from '../helpers';
+import {ICocktail} from '../types';
 
 export function CocktailCard({
   cocktail,
   navigation,
 }: {
-  cocktail: any;
+  cocktail: ICocktail;
   navigation: any;
 }) {
-  console.log(cocktail);
-
+  const handleNavigation = () =>
+    navigation.navigate('Cocktail', {id: cocktail.idDrink});
   return (
     // @ts-ignore
-    <Card>
+    <StyledCard onPress={handleNavigation}>
       <Card.Content>
-        <Title>{cocktail.strDrink}</Title>
+        <StyledTitle>{cocktail.strDrink}</StyledTitle>
         <Paragraph>
           {/* @ts-ignore */}
-          <Chip
-            style={{width: MAX_WIDTH * 0.5, overflow: 'hidden'}}
-            mode="outlined"
-            icon="format-list-bulleted-type">
-            {cocktail.strCategory}
-          </Chip>
+          {cocktail.strCategory && (
+            <Chip
+              style={chipStyle}
+              mode="outlined"
+              icon="format-list-bulleted-type">
+              {cocktail.strCategory}
+            </Chip>
+          )}
           {/* @ts-ignore */}
-          <Chip
-            style={{width: MAX_WIDTH * 0.4, overflow: 'hidden'}}
-            mode="outlined"
-            icon="glass-cocktail">
-            {cocktail.strAlcoholic}
-          </Chip>
+          {cocktail.strAlcoholic && (
+            <Chip style={chipStyle} mode="outlined" icon="glass-cocktail">
+              {cocktail.strAlcoholic}
+            </Chip>
+          )}
           {/* @ts-ignore */}
         </Paragraph>
       </Card.Content>
       {/* @ts-ignore */}
-      <Card.Cover
-        style={{height: 250}}
-        source={{uri: cocktail.strDrinkThumb}}
-      />
-    </Card>
+      {cocktail.strDrinkThumb && (
+        <StyledCocktailCover source={{uri: cocktail.strDrinkThumb}} />
+      )}
+    </StyledCard>
   );
 }
 
-const StyledCocktailCover = styled(Card.Cover)``;
+const StyledCocktailCover = styled(Card.Cover)`
+  height: 250px;
+  margin-top: 20px;
+`;
+
+const StyledTitle = styled(Title)`
+  margin-bottom: 20px;
+  color: ${({theme}) => theme.colors.font};
+`;
+
+const chipStyle = {width: MAX_WIDTH * 0.4, overflow: 'hidden', margin: 20};
+
+const StyledCard = styled(Card)`
+  background-color: ${({theme}) => theme.colors.sideBar};
+`;
