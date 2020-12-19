@@ -65,7 +65,8 @@ export function Home({navigation}: {navigation: any}) {
         {searchText ? (
           <>
             <Title>
-              {searchedCocktails.length} Search results for {searchText}:
+              {!loading && searchedCocktails.length} Search results for{' '}
+              {searchText}:
             </Title>
             {loading && <CocktailSkelaton />}
             {searchedCocktails.map((cocktail: ICocktail) => (
