@@ -19,6 +19,26 @@ export function Cocktail({navigation, route}: {navigation: any; route: any}) {
       } catch {}
     })();
   }, [id]);
+
+  const getIngredients = (): string => {
+    const arrOfIngredients: string[] = [];
+
+    for (let i = 1; i < 16; i++) {
+      //@ts-ignore
+      const ingredient = cocktail[`strIngredient${i}`];
+      if (ingredient) {
+        let itemToAdd = ingredient;
+        //@ts-ignore
+        const measure = cocktail[`strMeasure${i}`];
+        if (measure) {
+          itemToAdd = measure + ingredient;
+        }
+        arrOfIngredients.push(itemToAdd);
+      }
+    }
+
+    return arrOfIngredients.join('\n');
+  };
   return (
     <CocktailContainer>
       <ScrollView contentContainerStyle={ScrollViewStyle}>
@@ -36,8 +56,10 @@ export function Cocktail({navigation, route}: {navigation: any; route: any}) {
               <LabelIcon name="glass-cheers" size={25} />
               <LabelTxt>{cocktail.strGlass}</LabelTxt>
             </Label>
-            <InstructionsTitle>Instructions:</InstructionsTitle>
-            <Instructions>{cocktail.strInstructions}</Instructions>
+            <InfoTitle>Instructions:</InfoTitle>
+            <InfoText>{cocktail.strInstructions}</InfoText>
+            <InfoTitle>Ingredients:</InfoTitle>
+            <InfoText>{getIngredients()}</InfoText>
           </>
         )}
       </ScrollView>
@@ -45,16 +67,19 @@ export function Cocktail({navigation, route}: {navigation: any; route: any}) {
   );
 }
 
-const Instructions = styled(Text)`
+const InfoText = styled(Text)`
   margin-top: 12px;
   margin-left: 12px;
   color: ${({theme}) => theme.colors.font};
   font-size: 15px;
+  align-self: flex-start;
+  margin-bottom: 10px;
 `;
 
-const InstructionsTitle = styled(Text)`
+const InfoTitle = styled(Text)`
   align-self: flex-start;
-  margin: 12px;
+  margin-top: 12px;
+  margin-left: 12px;
   color: ${({theme}) => theme.colors.font};
   font-size: 20px;
 `;
@@ -78,7 +103,7 @@ const Label = styled(View)`
 const ScrollViewStyle = {alignItems: 'center'};
 
 const StyledImage = styled(Image)`
-  width: ${MAX_WIDTH * 0.8}px;
+  width: ${MAX_WIDTH}px;
   height: ${MAX_WIDTH * 0.8}px;
 `;
 
