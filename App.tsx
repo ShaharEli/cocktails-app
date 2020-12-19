@@ -10,12 +10,10 @@
 
 import React, {useEffect, useState} from 'react';
 import {PublicRoutes} from './routes';
-import {theme} from './helpers';
+import {theme, ThemeContext} from './helpers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Provider} from 'react-native-paper';
 import {ThemeType} from './types';
-import {useRecoilState} from 'recoil';
-import {themeState} from './atoms';
 import {StatusBar} from 'react-native';
 import {ThemeProvider} from 'styled-components';
 import {Loading} from './components';
@@ -23,7 +21,7 @@ import {Loading} from './components';
 declare const global: {HermesInternal: null | {}};
 
 const App = () => {
-  const [currentTheme, setCurrentTheme] = useRecoilState<ThemeType>(themeState);
+  const [currentTheme, setCurrentTheme] = useState<ThemeType>('dark');
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -48,11 +46,13 @@ const App = () => {
       {loading ? (
         <Loading />
       ) : (
-        <Provider>
-          <ThemeProvider theme={() => theme(currentTheme)}>
-            <PublicRoutes />
-          </ThemeProvider>
-        </Provider>
+        <ThemeContext.Provider value={{currentTheme, setCurrentTheme}}>
+          <Provider>
+            <ThemeProvider theme={() => theme(currentTheme)}>
+              <PublicRoutes />
+            </ThemeProvider>
+          </Provider>
+        </ThemeContext.Provider>
       )}
     </>
   );

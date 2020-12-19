@@ -1,15 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import {Switch} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import {SafeAreaView, View} from 'react-native';
-import {useRecoilState} from 'recoil';
-import {themeState} from '../atoms';
+import {ThemeContext} from '../helpers';
 
 export function SideBar({navigation}: {navigation: any}) {
   //@ts-ignore
-  const [currentTheme, setCurrentTheme] = useRecoilState<ThemeType>(themeState);
+  const {currentTheme, setCurrentTheme} = useContext<ThemeType>(ThemeContext);
 
   const onToggleTheme = async (): Promise<void> => {
     try {

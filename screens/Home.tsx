@@ -52,6 +52,7 @@ export function Home({navigation}: {navigation: any}) {
   return (
     <HomeContainer>
       <ScrollView>
+        {/* @ts-ignore */}
         <StyledInput
           label="Search drink"
           value={searchText}

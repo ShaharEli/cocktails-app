@@ -27,7 +27,6 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
     "react-native-vector-icons": "^7.1.0",
-    "recoil": "git+https://github.com/facebookexperimental/Recoil.git#nightly",
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
