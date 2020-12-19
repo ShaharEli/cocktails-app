@@ -13,7 +13,7 @@ export function CocktailSkelaton() {
       isLoading={true}
       animationDirection="horizontalLeft"
       boneColor="grey"
-      highlightColor="#ffffff"
+      highlightColor="#e9e1e1"
       containerStyle={{
         flex: 1,
         height: 300,
