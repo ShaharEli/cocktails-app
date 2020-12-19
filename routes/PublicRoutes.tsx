@@ -5,7 +5,7 @@ import {DrawerActions, NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/EvilIcons';
 import {ThemeType} from '../types';
 import {SideBar} from '../components';
-import {Home} from '../screens';
+import {Home, Cocktail} from '../screens';
 import {useRecoilValue} from 'recoil';
 import {themeState} from '../atoms';
 
@@ -45,6 +45,17 @@ const MainStack = () => {
         component={Home}
         options={({navigation}) => ({
           title: 'Home',
+          ...getHeaderStyle(currentTheme),
+          headerRight: () => (
+            <Hamburger navigation={navigation} theme={currentTheme} />
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="Cocktail"
+        component={Cocktail}
+        options={({navigation}) => ({
+          title: 'Cocktail info',
           ...getHeaderStyle(currentTheme),
           headerRight: () => (
             <Hamburger navigation={navigation} theme={currentTheme} />

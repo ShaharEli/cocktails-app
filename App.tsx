@@ -16,9 +16,9 @@ import {Provider} from 'react-native-paper';
 import {ThemeType} from './types';
 import {useRecoilState} from 'recoil';
 import {themeState} from './atoms';
-import {StatusBar, SafeAreaView, Image} from 'react-native';
-import styled, {ThemeProvider} from 'styled-components';
-import {Loading} from './components/Loading';
+import {StatusBar} from 'react-native';
+import {ThemeProvider} from 'styled-components';
+import {Loading} from './components';
 
 declare const global: {HermesInternal: null | {}};
 
@@ -33,7 +33,7 @@ const App = () => {
         if (previousTheme === 'light') {
           setCurrentTheme('light');
         }
-      } catch (err) {
+      } catch {
       } finally {
         setLoading(false);
       }
