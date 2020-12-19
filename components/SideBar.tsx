@@ -43,6 +43,9 @@ export function SideBar({navigation}: {navigation: any}) {
       case 'Glasses':
         navigation.navigate('Categories', {query: 'g'});
         break;
+      case 'Ingredients':
+        navigation.navigate('Categories', {query: 'i'});
+        break;
       default:
         navigation.navigate(route);
         break;
@@ -75,6 +78,10 @@ export function SideBar({navigation}: {navigation: any}) {
           color={getRouteIconColor()}
         />
         <RouteLinkText>Glasses Categories</RouteLinkText>
+      </RouteLink>
+      <RouteLink onPress={() => handleNavigation('Ingredients')}>
+        <IconTwo size={28} name="atom" color={getRouteIconColor()} />
+        <RouteLinkText>Ingredients</RouteLinkText>
       </RouteLink>
     </SideBarContainer>
   );
