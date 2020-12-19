@@ -59,4 +59,5 @@ const chipStyle = {width: MAX_WIDTH * 0.4, overflow: 'hidden', margin: 20};
 
 const StyledCard = styled(Card)`
   background-color: ${({theme}) => theme.colors.sideBar};
+  margin-bottom: 25px;
 `;

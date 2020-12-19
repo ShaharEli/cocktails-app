@@ -51,15 +51,17 @@ export function Home({navigation}: {navigation: any}) {
 
   return (
     <HomeContainer>
-      <StyledInput
-        label="Search drink"
-        value={searchText}
-        onChangeText={(text) => handleSearch(text)}
-      />
       <ScrollView>
+        <StyledInput
+          label="Search drink"
+          value={searchText}
+          onChangeText={(text) => handleSearch(text)}
+        />
         {searchText ? (
           <>
-            <Title></Title>
+            <Title>
+              {searchedCocktails.length} Search results for {searchText}:
+            </Title>
             {searchedCocktails.map((cocktail: ICocktail) => (
               <CocktailCard
                 key={cocktail.idDrink}
@@ -88,7 +90,7 @@ export function Home({navigation}: {navigation: any}) {
 const Title = styled(Text)`
   color: ${({theme}) => theme.colors.font};
   font-size: 30px;
-  padding: 10px;
+  padding: 15px;
 `;
 
 const HomeContainer = styled(SafeAreaView)`
@@ -97,6 +99,7 @@ const HomeContainer = styled(SafeAreaView)`
 `;
 
 const StyledInput = styled(TextInput)`
-  background-color: grey;
   margin-top: 20px;
+  width: 90%;
+  align-self: center;
 `;
