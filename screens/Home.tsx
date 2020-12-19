@@ -42,7 +42,6 @@ export function Home({navigation}: {navigation: any}) {
       await handleFetchRandomCocktail();
     })();
   }, []);
-  console.log(searchedCocktails);
 
   const handleSearch = async (search: string) => {
     setSearchText(search);
