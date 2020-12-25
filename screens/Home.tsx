@@ -60,6 +60,7 @@ export function Home({navigation}: {navigation: any}) {
         <StyledInput
           label="Search drink"
           value={searchText}
+          testID="input"
           onChangeText={(text) => handleSearch(text)}
         />
         {searchText ? (
@@ -85,7 +86,7 @@ export function Home({navigation}: {navigation: any}) {
         ) : (
           <View>
             <TouchableOpacity onPress={handleFetchRandomCocktail}>
-              <Title>
+              <Title testID="title">
                 While you are thinking what cocktail you want heres random
                 cocktail
               </Title>
