@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [main, testing]
 
+  workflow_dispatch:
+
 jobs:
   build:
     runs-on: macos-latest
@@ -21,15 +23,16 @@ jobs:
         uses: actions/setup-node@v1
 
       - name: Use specific Java version for sdkmanager to work
-        uses: joschi/setup-jdk@v1
+        uses: joschi/setup-jdk@v2
         with:
           java-version: 'openjdk8'
           architecture: 'x64'
 
       - name: Download Android Emulator Image
         run: |
-          echo y | sudo $ANDROID_HOME/tools/bin/sdkmanager "system-images;android-28;google_apis;x86_64" > /dev/null
-          $ANDROID_HOME/tools/bin/avdmanager -s create avd -n emu -k "system-images;android-28;google_apis;x86_64" -b "x86_64" -c 1G -d 7 -f
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install "system-images;android-29;google_apis;x86"
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Nexus 5X" -k 'system-images;android-29;google_apis;x86'
+          $ANDROID_HOME/emulator/emulator -list-avds
 
       - name: Install node_modules
         run: |
