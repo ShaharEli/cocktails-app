@@ -36,7 +36,6 @@ export function Cocktail({navigation, route}: {navigation: any; route: any}) {
         arrOfIngredients.push(itemToAdd);
       }
     }
-
     return arrOfIngredients.join('\n');
   };
   return (
