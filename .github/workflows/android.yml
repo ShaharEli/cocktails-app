@@ -36,11 +36,11 @@ jobs:
 
       - name: Install node_modules
         run: |
-          yarn install --frozen-lockfile
+          npm i
 
       - name: Build for detox
         run: |
-          yarn build-detox-android
+          npm run build-detox-android
       - name: Android Emulator
         timeout-minutes: 10
         continue-on-error: true
@@ -51,4 +51,4 @@ jobs:
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
       - name: Android Detox
-        run: yarn start & yarn test-detox-android
+        run: npm run test-detox-android
