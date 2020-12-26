@@ -39,6 +39,9 @@ jobs:
         run: |
           npm i
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
       - name: Build for detox
         run: |
           npm run build-detox-android
