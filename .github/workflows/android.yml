@@ -40,10 +40,6 @@ jobs:
           npm i
 
       - name: Build for detox
-        before_install:
-          - pwd
-          - ls -la
-          - chmod +x /.gradlew
         run: |
           npm run build-detox-android
       - name: Android Emulator
