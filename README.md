@@ -6,9 +6,9 @@
 
 Heres some pics:
 
-<img src="./pics/homePage.png" style="width:120px;margin-left:20px;margin-bottom:20px">
-<img src="./pics/homePageLoading.png" style="width:120px;margin-left:20px;margin-bottom:20px">
-<img src="./pics/sideBar.png" style="width:120px;margin-left:20px;margin-bottom:20px">
-<img src="./pics/sideBarLight.png" style="width:120px;margin-left:20px;margin-bottom:20px">
-<img src="./pics/cocktailDark.png" style="width:120px;margin-left:20px;margin-bottom:20px">
-<img src="./pics/cocktailLight.png" style="width:120px;margin-left:20px;margin-bottom:20px">
+<img src="./pics/homePage.png" style="margin-left:20px;margin-bottom:20px" width="200">
+<img src="./pics/homePageLoading.png" style="margin-left:20px;margin-bottom:20px" width="200">
+<img src="./pics/sideBar.png" style="margin-left:20px;margin-bottom:20px" width="200">
+<img src="./pics/sideBarLight.png" style="margin-left:20px;margin-bottom:20px" width="200">
+<img src="./pics/cocktailDark.png" style="margin-left:20px;margin-bottom:20px" width="200">
+<img src="./pics/cocktailLight.png" style="margin-left:20px;margin-bottom:20px" width="200">
