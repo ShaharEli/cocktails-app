@@ -10,9 +10,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  Test-and-upload:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     steps:
       - name: Checkout
@@ -35,16 +35,18 @@ jobs:
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Nexus 5X" -k 'system-images;android-29;google_apis;x86'
           $ANDROID_HOME/emulator/emulator -list-avds
 
-      - name: Install node_modules
+      - name: Install depedencies
         run: |
           npm i
 
       - name: Make gradlew executable
         run: cd android && chmod +x ./gradlew && cd ..
-      - name: Build for detox
+
+      - name: Build app for detox tests
         run: |
           npm run build-detox-android
-      - name: Android Emulator
+
+      - name: Start android Emulator
         timeout-minutes: 20
         # continue-on-error: true
         run: |
@@ -53,12 +55,15 @@ jobs:
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
-      - name: Android Detox
+
+      - name: Run android Detox tests
         run: npm run test-detox-android
+
       - name: Build Release for android store
         id: buildRelease
         run: cd android && ./gradlew bundleRelease
-      - name: Sign AAB
+
+      - name: Sign bundle release
         id: sign
         uses: r0adkll/sign-android-release@v1
         with:
@@ -67,16 +72,19 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-      - name: Upload AAB
+
+      - name: Upload bundle release
         id: uploadArtifact
         uses: actions/upload-artifact@v1
         with:
           name: app
           path: app/build/outputs/bundle/release/app-release.aab
+
       - name: Create service_account.json
         id: createServiceAccount
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
-      - name: Deploy to Play Store (BETA)
+
+      - name: Deploy to Play Store
         id: deploy
         uses: r0adkll/upload-google-play@v1
         with:
