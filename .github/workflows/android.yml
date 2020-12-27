@@ -47,7 +47,7 @@ jobs:
           npm run build-detox-android
       - name: Android Emulator
         timeout-minutes: 20
-        continue-on-error: true
+        # continue-on-error: true
         run: |
           echo "Starting emulator"
           nohup $ANDROID_HOME/emulator/emulator -avd emu -no-audio -no-snapshot -no-window &
@@ -56,3 +56,33 @@ jobs:
           echo "Emulator started"
       - name: Android Detox
         run: npm run test-detox-android
+      - name: Build Release for android store
+        id: buildRelease
+        run: cd android && ./gradlew bundleRelease
+      - name: Sign AAB
+        id: sign
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Upload AAB
+        id: uploadArtifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app
+          path: app/build/outputs/bundle/release/app-release.aab
+      - name: Create service_account.json
+        id: createServiceAccount
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+      - name: Deploy to Play Store (BETA)
+        id: deploy
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service_account.json
+          packageName: com.package
+          releaseFile: app/build/outputs/bundle/release/app-release.aab
+          track: beta
+          whatsNewDirectory: whatsnew/
