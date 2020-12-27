@@ -63,6 +63,9 @@ jobs:
         id: buildRelease
         run: cd android && ./gradlew bundleRelease
 
+      - name: Remove signature from app if already exists
+        run: zip -d android/app/build/outputs/bundle/release/app-release.aab META-INF/\*
+
       - name: Sign bundle release
         id: sign
         uses: r0adkll/sign-android-release@v1
