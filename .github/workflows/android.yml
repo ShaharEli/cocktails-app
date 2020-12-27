@@ -41,7 +41,8 @@ jobs:
 
       - name: Make gradlew executable
         run: cd android && chmod +x ./gradlew && cd ..
-
+      - name: Make key store file
+        run: cd android\app &&  echo '${{ secrets.SIGNING_KEY }}' > my-upload-key.keystore   && cd .. && cd ..
       - name: Build for detox
         run: |
           npm run build-detox-android
