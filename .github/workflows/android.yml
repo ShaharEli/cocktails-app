@@ -35,9 +35,9 @@ jobs:
       #     echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Nexus 5X" -k 'system-images;android-29;google_apis;x86'
       #     $ANDROID_HOME/emulator/emulator -list-avds
 
-      # - name: Install depedencies
-      #   run: |
-      #     npm i
+      - name: Install depedencies
+        run: |
+          npm i
 
       - name: Make gradlew executable
         run: cd android && chmod +x ./gradlew && cd ..
