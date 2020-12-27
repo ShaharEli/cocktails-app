@@ -39,8 +39,8 @@ jobs:
       #   run: |
       #     npm i
 
-      # - name: Make gradlew executable
-      #   run: cd android && chmod +x ./gradlew && cd ..
+      - name: Make gradlew executable
+        run: cd android && chmod +x ./gradlew && cd ..
 
       # - name: Build app for detox tests
       #   run: |
