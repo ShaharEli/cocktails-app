@@ -1,4 +1,4 @@
-package com.cocktailsshahar;
+package com.shaharcocktails;
 
 import com.facebook.react.ReactActivity;
 
