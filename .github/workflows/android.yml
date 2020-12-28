@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Test-and-deploy:
+  Test-build-and-deploy:
     runs-on: macos-latest
     timeout-minutes: 60
 
