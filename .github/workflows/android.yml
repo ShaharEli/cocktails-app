@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  Test-and-upload:
+  Test-and-deploy:
     runs-on: macos-latest
     timeout-minutes: 60
 
@@ -92,7 +92,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
-          packageName: com.package
+          packageName: com.cocktails
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: beta
           whatsNewDirectory: whatsNewDirectory
