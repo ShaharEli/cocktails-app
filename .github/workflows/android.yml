@@ -93,6 +93,6 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.package
-          releaseFile: app/build/outputs/bundle/release/app-release.aab
+          releaseFile: android/app/build/outputs/bundle/release/app-release.aab
           track: beta
           whatsNewDirectory: whatsnew/
