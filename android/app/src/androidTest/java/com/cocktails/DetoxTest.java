@@ -1,4 +1,4 @@
-    package com.shaharcocktails; /* change to app package name */
+    package com.cocktails; /* change to app package name */
 
     import com.wix.detox.Detox;
 
