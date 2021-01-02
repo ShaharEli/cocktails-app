@@ -52,6 +52,7 @@
     "jest": "^25.5.4",
     "jest-circus": "^26.6.3",
     "metro-react-native-babel-preset": "^0.59.0",
+    "native-pixelmatch": "0.0.6",
     "react-test-renderer": "16.13.1",
     "typescript": "^3.9.7"
   },
