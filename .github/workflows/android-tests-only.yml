@@ -3,9 +3,9 @@ name: Android tests only
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main, screenshot-testing]
+    branches: [main, testing]
   pull_request:
-    branches: [main, screenshot-testing]
+    branches: [main, testing]
 
 jobs:
   Test-android-app:
@@ -30,7 +30,7 @@ jobs:
       - name: Download Android Emulator Image
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install "system-images;android-29;google_apis;x86"
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Pixel_3a_API_30_x86" -k 'system-images;android-29;google_apis;x86'
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd --force --name emu --device "Nexus 5X" -k 'system-images;android-29;google_apis;x86'
           $ANDROID_HOME/emulator/emulator -list-avds
 
       - name: Install depedencies

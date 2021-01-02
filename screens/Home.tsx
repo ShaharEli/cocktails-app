@@ -87,8 +87,7 @@ export function Home({navigation}: {navigation: any}) {
           <View>
             <TouchableOpacity onPress={handleFetchRandomCocktail}>
               <Title testID="title">
-                While you are thinking what cocktail you want heres random
-                cocktail
+              While you are thinking what cocktail you want heres random cocktail
               </Title>
             </TouchableOpacity>
             {randomCocktail ? (
