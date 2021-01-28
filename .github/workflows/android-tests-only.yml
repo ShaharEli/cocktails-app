@@ -3,7 +3,7 @@ name: Android tests only
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main, testing]
+    branches: [main, screenshot-testing]
   pull_request:
     branches: [main, testing]
 
