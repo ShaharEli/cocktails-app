@@ -2,6 +2,8 @@ name: Android tests only
 # step 1: run git update-index --chmod=+x gradlew
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [main, testing]
   pull_request:
     branches: [main, testing]
 
