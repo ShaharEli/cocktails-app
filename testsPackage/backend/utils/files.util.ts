@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import pixelMatch from 'pixelmatch';
 import {PNG} from 'pngjs';
+import {File} from '../types';
 const tempDiffFolder = 'tempDiffFolder';
 const tempDiffFileName = 'tempDiff.png';
 const pathToTempDiffFolder = path.resolve(__dirname, '../', tempDiffFolder);
@@ -13,7 +14,7 @@ type FirstIndicator = 'base' | 'newShots' | null;
 
 export const base64Encode = (file: string) => {
   let bitmap = fs.readFileSync(file);
-  return Buffer.from(bitmap).toString('base64');
+  return 'data:image/png;base64,' + Buffer.from(bitmap).toString('base64');
 };
 
 export const fromDir = (
@@ -62,12 +63,10 @@ export const sampleConfig = {
   },
 };
 
-// @ts-ignore
-export const createDiffs = async (
+export const createDiffs = (
   baseImgPath: string,
   newImgPath: string,
-  // @ts-ignore
-): string | null => {
+): File | null => {
   const tmpImage = PNG.sync.read(fs.readFileSync(baseImgPath));
   const saveImage = PNG.sync.read(fs.readFileSync(newImgPath));
   const {width, height} = saveImage;
@@ -90,7 +89,7 @@ export const createDiffs = async (
     fs.writeFileSync(pathToTempDiffFile, PNG.sync.write(diff));
     const base64 = base64Encode(pathToTempDiffFile);
     fs.unlinkSync(pathToTempDiffFile);
-    return base64;
+    return {data: base64, width, height};
   } else {
     return null;
   }
