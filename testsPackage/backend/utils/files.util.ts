@@ -4,6 +4,13 @@ const baseArr: string[] = []
 const diffArr: string[] = []
 let current = "base"
 type FirstIndicator = "base" | "diff" | null
+
+export const base64Encode = (file: string) => {
+    let bitmap = fs.readFileSync(file);
+    return Buffer.from(bitmap).toString("base64");
+}
+
+
 export function fromDir(startPath: string, filter: string, first: FirstIndicator = null): string[] | null {
     if (first) {
         current = first

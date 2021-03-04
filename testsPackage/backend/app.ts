@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import { Config, Configs } from './types';
-import { fromDir } from './utils';
+import { fromDir, base64Encode } from './utils';
 
 const rootPath: string = path.resolve(process.cwd(), '../../');
 
@@ -63,7 +63,7 @@ const getDiffs = () => {
                 baseFileName === extractFileName(diffPic, diffFilter, picType) &&
                 basePic !== diffPic
             ) {
-                pairs.push([basePic, diffPic, baseFileName]);
+                pairs.push([basePic, diffPic, base64Encode(basePic), base64Encode(diffPic), baseFileName]);
             }
         }
     }
