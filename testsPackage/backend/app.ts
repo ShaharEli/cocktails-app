@@ -19,8 +19,40 @@ const app = express();
 
 const getPics = (type: "base" | "diff") => {
     const { [type]: { path, filter }, picType } = getConfig()
-    return fromDir(path, `${filter}.${picType}`, true)
+    return fromDir(path, `${filter}.${picType}`, type)
 }
+
+
+const extractFileName = (file: string, filter: string, picType: string) => {
+    const splittedFile = file.split("/")
+    const formattedFile = splittedFile[splittedFile.length - 1]
+    return formattedFile.substring(0, formattedFile.lastIndexOf(`${filter}.${picType}`))
+};
+
+
+
+
+const getDiffs = () => {
+    const { base: { filter: baseFilter }, diff: { filter: diffFilter }, picType } = getConfig()
+    const basePics = getPics("base")
+    const diffPics = getPics("diff")
+    if (!basePics || !diffPics) return
+    const pairs = []
+    for (let basePic of basePics) {
+        for (let diffPic of diffPics) {
+            if (
+                extractFileName(basePic, baseFilter, picType) ===
+                extractFileName(diffPic, diffFilter, picType) && basePic !== diffPic
+            ) {
+                pairs.push([basePic, diffPic])
+            }
+        }
+    }
+    return pairs
+}
+console.log(
+    getDiffs()
+);
 
 
 

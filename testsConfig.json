@@ -6,6 +6,6 @@
   },
   "diffShots": {
     "folder": "screenshot_testing",
-    "fileSuffix": ""
+    "fileSuffix": "-diff"
   }
 }
