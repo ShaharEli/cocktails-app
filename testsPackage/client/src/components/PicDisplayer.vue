@@ -12,8 +12,25 @@
           :rightImage="data.newShotsPicFile"
         />
       </div>
-      <div v-on:click="handleClick">Approve</div>
+      <div v-if="loading">
+        <md-progress-spinner
+          class="md-accent"
+          md-mode="indeterminate"
+        ></md-progress-spinner>
+      </div>
+      <md-button v-else @click="handleClick" class="md-raised"
+        >Approve</md-button
+      >
     </div>
+    <md-snackbar
+      :md-position="position"
+      :md-duration="3000"
+      :md-active.sync="this.error"
+      md-persistent
+    >
+      <span>{{ error }}</span>
+      <md-button class="md-primary" @click="handleClick">Retry</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -34,10 +51,13 @@ export default {
   data() {
     return {
       picsData: this.data,
+      loading: false,
+      error: false,
     };
   },
   methods: {
     async handleClick() {
+      this.loading = true;
       try {
         const {basePic, newShotsPic} = this.picsData;
         const {
@@ -50,9 +70,11 @@ export default {
               basePath === basePic && newPath === newShotsPic ? false : true,
           );
         }
-        return '';
       } catch ({message}) {
-        console.log(message);
+        this.error = `Error occured, ${message}`;
+        setTimeout(() => (this.error = false), 5000);
+      } finally {
+        this.loading = false;
       }
     },
   },
@@ -75,6 +97,12 @@ export default {
 
 
 <style scoped>
+BUTTON.md-button
+  .md-progress-spinner.md-indeterminate.md-progress-spinner-enter,
+BUTTON.md-button
+  .md-progress-spinner.md-indeterminate.md-progress-spinner-leave-active {
+  display: none;
+}
 .images-container {
   display: flex;
   flex-wrap: wrap;

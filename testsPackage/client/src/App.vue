@@ -11,7 +11,7 @@
 <script>
 import axios from 'axios';
 import {globalStore} from './utils/globalState';
-const darkTheme = () => import('vue-material/dist/theme/default-dark.css');
+const useDarkTheme = () => import('vue-material/dist/theme/default-dark.css');
 
 export default {
   data() {
@@ -23,16 +23,19 @@ export default {
 
   async mounted() {
     try {
+      const {
+        data: {theme: appTheme},
+      } = await axios.get('/theme');
+      if (appTheme === 'dark') {
+        useDarkTheme();
+      }
+      globalStore.theme = appTheme;
       if (!globalStore.pics.length) {
         const {
-          data: {pics: allPics, theme: appTheme},
+          data: {pics: allPics},
         } = await axios.get('/diffs');
-        console.log(appTheme);
-        if (appTheme === 'dark') {
-          darkTheme();
-        }
+
         globalStore.pics = allPics;
-        globalStore.theme = appTheme;
       }
     } catch ({message}) {
       console.log(message);

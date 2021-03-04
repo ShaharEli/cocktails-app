@@ -111,9 +111,13 @@ const getDiffs = () => {
 
 app.use(express.json());
 
-app.get('/diffs', (req: Request, res: Response) => {
+app.get('/theme', (req, res) => {
   const {theme} = getConfig();
-  res.json({pics: getDiffs(), theme});
+  res.json({theme});
+});
+
+app.get('/diffs', (req: Request, res: Response) => {
+  res.json({pics: getDiffs()});
 });
 
 app.post('/approve', async (req: Request, res: Response) => {
