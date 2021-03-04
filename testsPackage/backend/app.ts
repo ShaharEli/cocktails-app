@@ -54,7 +54,7 @@ const getDiffs = () => {
     } = getConfig();
     const basePics = getPics('base');
     const diffPics = getPics('diff');
-    if (!basePics || !diffPics) return;
+    if (!basePics || !diffPics) return [];
     const pairs = [];
     for (let basePic of basePics) {
         for (let diffPic of diffPics) {
