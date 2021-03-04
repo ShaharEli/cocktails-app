@@ -12,9 +12,11 @@ const newShotsArr: string[] = [];
 let current = 'base';
 type FirstIndicator = 'base' | 'newShots' | null;
 
-export const base64Encode = (file: string) => {
+export const base64Encode = (file: string, picType: string) => {
   let bitmap = fs.readFileSync(file);
-  return 'data:image/png;base64,' + Buffer.from(bitmap).toString('base64'); //TODO
+  return (
+    `data:image/${picType};base64,` + Buffer.from(bitmap).toString('base64')
+  ); //TODO
 };
 
 export const fromDir = (
@@ -66,6 +68,7 @@ export const sampleConfig = {
 export const createDiffs = (
   baseImgPath: string,
   newImgPath: string,
+  picType: string,
 ): File | null => {
   const tmpImage = PNG.sync.read(fs.readFileSync(baseImgPath));
   const saveImage = PNG.sync.read(fs.readFileSync(newImgPath));
@@ -87,7 +90,7 @@ export const createDiffs = (
       fs.mkdirSync(pathToTempDiffFolder);
     }
     fs.writeFileSync(pathToTempDiffFile, PNG.sync.write(diff));
-    const base64 = base64Encode(pathToTempDiffFile);
+    const base64 = base64Encode(pathToTempDiffFile, picType);
     fs.unlinkSync(pathToTempDiffFile);
     return {data: base64, width, height};
   } else {

@@ -12,12 +12,15 @@
           :rightImage="data.newShotsPicFile"
         />
       </div>
+      <div v-on:click="handleClick">Approve</div>
     </div>
   </div>
 </template>
 
 <script>
 import VueCompareImage from 'vue-compare-image';
+import axios from 'axios';
+import {globalStore} from '../utils/globalState';
 
 export default {
   name: 'PicDisplayer',
@@ -30,9 +33,30 @@ export default {
 
   data() {
     return {
-      // data: props.data,
+      picsData: this.data,
     };
   },
+  methods: {
+    async handleClick() {
+      try {
+        const {basePic, newShotsPic} = this.picsData;
+        const {
+          data: {success},
+        } = await axios.post('/approve', {basePic, newShotsPic});
+        if (success) {
+          const {pics: allPics} = globalStore;
+          globalStore.pics = allPics.filter(
+            ({basePic: basePath, newShotsPic: newPath}) =>
+              basePath === basePic && newPath === newShotsPic ? false : true,
+          );
+        }
+        return '';
+      } catch ({message}) {
+        console.log(message);
+      }
+    },
+  },
+
   computed: {
     imgStyle() {
       const {

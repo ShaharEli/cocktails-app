@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <div v-if="info.length">
-      <div :key="pics.basePic" v-for="pics in info.filter((img) => !!img.diff)">
+    <div v-if="getPics.length">
+      <div
+        :key="pics.basePic"
+        v-for="pics in getPics.filter((img) => !!img.diff)"
+      >
         <PicDisplayer :data="pics" />
       </div>
     </div>
@@ -18,10 +21,10 @@ export default {
   components: {
     PicDisplayer,
   },
-  data() {
-    return {
-      info: globalStore.pics,
-    };
+  computed: {
+    getPics() {
+      return globalStore.pics;
+    },
   },
 };
 </script>

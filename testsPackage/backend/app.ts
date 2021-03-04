@@ -39,12 +39,20 @@ const getConfig = (): Configs => {
 
 const app = express();
 
-const getPics = (type: 'base' | 'newShots'): string[] | null => {
+interface Pics {
+  picType: string;
+  pics: string[] | null;
+}
+
+const getPics = (type: 'base' | 'newShots'): Pics => {
   const {
     [type]: {path, filter, ignoreSuffix},
     picType,
   } = getConfig();
-  return fromDir(path, `${filter}.${picType}`, ignoreSuffix, type);
+  return {
+    pics: fromDir(path, `${filter}.${picType}`, ignoreSuffix, type),
+    picType,
+  };
 };
 
 const extractFileName = (
@@ -68,8 +76,8 @@ const getDiffs = () => {
     newShots: {filter: newShotsFilter, path: newShotsPath},
     picType,
   } = getConfig();
-  const basePics = getPics('base');
-  const newShotsPics = getPics('newShots');
+  const {pics: basePics} = getPics('base');
+  const {pics: newShotsPics} = getPics('newShots');
   if (!basePics || !newShotsPics) return [];
   const pairs = [];
   for (let basePic of basePics) {
@@ -88,10 +96,10 @@ const getDiffs = () => {
         pairs.push({
           basePic,
           newShotsPic,
-          basePicFile: base64Encode(basePic),
-          newShotsPicFile: base64Encode(newShotsPic),
+          basePicFile: base64Encode(basePic, picType),
+          newShotsPicFile: base64Encode(newShotsPic, picType),
           baseFileName,
-          diff: createDiffs(basePic, newShotsPic),
+          diff: createDiffs(basePic, newShotsPic, picType),
         });
       }
     }
@@ -105,6 +113,21 @@ app.get('/diffs', (req: Request, res: Response) => {
   res.json(getDiffs());
 });
 
+app.post('/approve', async (req: Request, res: Response) => {
+  try {
+    const {
+      body: {basePic, newShotsPic},
+    } = req;
+    if (!fs.existsSync(basePic) || !fs.existsSync(newShotsPic)) {
+      return res.json({success: false});
+    }
+    fs.unlinkSync(basePic);
+    fs.renameSync(newShotsPic, basePic);
+    res.json({success: true});
+  } catch ({message}) {
+    res.json({message});
+  }
+});
 app.use(express.json());
 
 app.use(express.static('../client/build'));
