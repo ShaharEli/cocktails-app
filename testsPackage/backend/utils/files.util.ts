@@ -14,7 +14,7 @@ type FirstIndicator = 'base' | 'newShots' | null;
 
 export const base64Encode = (file: string) => {
   let bitmap = fs.readFileSync(file);
-  return 'data:image/png;base64,' + Buffer.from(bitmap).toString('base64');
+  return 'data:image/png;base64,' + Buffer.from(bitmap).toString('base64'); //TODO
 };
 
 export const fromDir = (
