@@ -1,0 +1,11 @@
+{
+  "picType": "png",
+  "baseShots": {
+    "folder": "screenshot_testing",
+    "fileSuffix": ""
+  },
+  "diffShots": {
+    "folder": "screenshot_testing",
+    "fileSuffix": ""
+  }
+}

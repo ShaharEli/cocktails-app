@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import {Card, Title, Chip} from 'react-native-paper';
 import styled from 'styled-components';
@@ -14,19 +15,16 @@ export function CocktailCard({
   const handleNavigation = () =>
     navigation.navigate('Cocktail', {id: cocktail.idDrink});
   return (
-    // @ts-ignore
     <StyledCard onPress={handleNavigation}>
       <Card.Content>
         <StyledTitle>{cocktail.strDrink}</StyledTitle>
         <ChipContainer>
           {cocktail.strCategory && (
-            // @ts-ignore
             <Chip mode="outlined" icon="format-list-bulleted-type">
               {cocktail.strCategory}
             </Chip>
           )}
           {cocktail.strAlcoholic && (
-            // @ts-ignore
             <Chip mode="outlined" icon="glass-cocktail">
               {cocktail.strAlcoholic}
             </Chip>
@@ -34,7 +32,6 @@ export function CocktailCard({
         </ChipContainer>
       </Card.Content>
       {cocktail.strDrinkThumb && (
-        // @ts-ignore
         <StyledCocktailCover source={{uri: cocktail.strDrinkThumb}} />
       )}
     </StyledCard>
