@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --project ./",
-    "start": "nodemon index.ts"
+    "start": "nodemon index.ts",
+    "build-tree": "cd scripts && npx ts-node createFoldersTree.ts && cd .."
   },
   "jest": {
     "moduleFileExtensions": [

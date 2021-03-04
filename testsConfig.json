@@ -1,11 +1,13 @@
 {
   "picType": "png",
   "baseShots": {
-    "folder": "screenshot_testing",
-    "fileSuffix": ""
+    "folder": "screenshot_testing/shots",
+    "fileSuffix": "",
+    "ignoreSuffix": "full"
   },
-  "diffShots": {
-    "folder": "screenshot_testing",
-    "fileSuffix": "-diff"
+  "newShots": {
+    "folder": "screenshot_testing/temp",
+    "fileSuffix": "-diff",
+    "ignoreSuffix": "full"
   }
 }
