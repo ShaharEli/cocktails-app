@@ -1,55 +1,97 @@
-import fs from "fs"
-import path from "path"
-const baseArr: string[] = []
-const newShotsArr: string[] = []
-let current = "base"
-type FirstIndicator = "base" | "newShots" | null
+import fs from 'fs';
+import path from 'path';
+import pixelMatch from 'pixelmatch';
+import {PNG} from 'pngjs';
+const tempDiffFolder = 'tempDiffFolder';
+const tempDiffFileName = 'tempDiff.png';
+const pathToTempDiffFolder = path.resolve(__dirname, '../', tempDiffFolder);
+const pathToTempDiffFile = path.resolve(pathToTempDiffFolder, tempDiffFileName);
+const baseArr: string[] = [];
+const newShotsArr: string[] = [];
+let current = 'base';
+type FirstIndicator = 'base' | 'newShots' | null;
 
 export const base64Encode = (file: string) => {
-    let bitmap = fs.readFileSync(file);
-    return Buffer.from(bitmap).toString("base64");
-}
-
-
-export const fromDir = (startPath: string, filter: string, ignoreSuffix: string, first: FirstIndicator = null): string[] | null => {
-    if (first) {
-        current = first
-        if (first === "base") {
-            baseArr.length = 0
-        } else {
-            newShotsArr.length = 0
-        }
-    }
-    const currentArr = current === "base" ? baseArr : newShotsArr
-    if (!fs.existsSync(startPath)) {
-        console.log("no dir ", startPath);
-        return null;
-    }
-    const files = fs.readdirSync(startPath);
-    for (let i = 0; i < files.length; i++) {
-        const filename = path.join(startPath, files[i]);
-        const stat = fs.lstatSync(filename);
-        if (stat.isDirectory()) {
-            fromDir(filename, filter, ignoreSuffix);
-        }
-        else if (filename.endsWith(filter) && !filename.endsWith(ignoreSuffix)) {
-            currentArr.push(filename)
-        };
-    };
-    return currentArr
+  let bitmap = fs.readFileSync(file);
+  return Buffer.from(bitmap).toString('base64');
 };
 
+export const fromDir = (
+  startPath: string,
+  filter: string,
+  ignoreSuffix: string,
+  first: FirstIndicator = null,
+): string[] | null => {
+  if (first) {
+    current = first;
+    if (first === 'base') {
+      baseArr.length = 0;
+    } else {
+      newShotsArr.length = 0;
+    }
+  }
+  const currentArr = current === 'base' ? baseArr : newShotsArr;
+  if (!fs.existsSync(startPath)) {
+    console.log('no dir ', startPath);
+    return null;
+  }
+  const files = fs.readdirSync(startPath);
+  for (let i = 0; i < files.length; i++) {
+    const filename = path.join(startPath, files[i]);
+    const stat = fs.lstatSync(filename);
+    if (stat.isDirectory()) {
+      fromDir(filename, filter, ignoreSuffix);
+    } else if (filename.endsWith(filter) && !filename.endsWith(ignoreSuffix)) {
+      currentArr.push(filename);
+    }
+  }
+  return currentArr;
+};
 
 export const sampleConfig = {
-    "picType": "png",
-    "baseShots": {
-        "folder": "screenshot_testing/shots",
-        "fileSuffix": "",
-        "ignoreSuffix": "full"
+  picType: 'png',
+  baseShots: {
+    folder: 'screenshot_testing/shots',
+    fileSuffix: '',
+    ignoreSuffix: 'full',
+  },
+  newShots: {
+    folder: 'screenshot_testing/temp',
+    fileSuffix: '-diff',
+    ignoreSuffix: 'full',
+  },
+};
+
+// @ts-ignore
+export const createDiffs = async (
+  baseImgPath: string,
+  newImgPath: string,
+  // @ts-ignore
+): string | null => {
+  const tmpImage = PNG.sync.read(fs.readFileSync(baseImgPath));
+  const saveImage = PNG.sync.read(fs.readFileSync(newImgPath));
+  const {width, height} = saveImage;
+  const diff = new PNG({width, height});
+  const diffCount = pixelMatch(
+    saveImage.data,
+    tmpImage.data,
+    diff.data,
+    width,
+    height,
+    {
+      threshold: 0.1,
     },
-    "newShots": {
-        "folder": "screenshot_testing/temp",
-        "fileSuffix": "-diff",
-        "ignoreSuffix": "full"
+  );
+  console.log('diffCount:', diffCount);
+  if (diffCount > 0) {
+    if (!fs.existsSync(pathToTempDiffFolder)) {
+      fs.mkdirSync(pathToTempDiffFolder);
     }
-}
+    fs.writeFileSync(pathToTempDiffFile, PNG.sync.write(diff));
+    const base64 = base64Encode(pathToTempDiffFile);
+    fs.unlinkSync(pathToTempDiffFile);
+    return base64;
+  } else {
+    return null;
+  }
+};

@@ -7,7 +7,7 @@
   },
   "newShots": {
     "folder": "screenshot_testing/temp",
-    "fileSuffix": "-diff",
+    "fileSuffix": "",
     "ignoreSuffix": "full"
   }
 }
