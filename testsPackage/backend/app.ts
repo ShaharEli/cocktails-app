@@ -40,19 +40,17 @@ const getDiffs = () => {
     const pairs = []
     for (let basePic of basePics) {
         for (let diffPic of diffPics) {
+            const baseFileName = extractFileName(basePic, baseFilter, picType)
             if (
-                extractFileName(basePic, baseFilter, picType) ===
+                baseFileName ===
                 extractFileName(diffPic, diffFilter, picType) && basePic !== diffPic
             ) {
-                pairs.push([basePic, diffPic])
+                pairs.push([basePic, diffPic, baseFileName])
             }
         }
     }
     return pairs
 }
-console.log(
-    getDiffs()
-);
 
 
 
