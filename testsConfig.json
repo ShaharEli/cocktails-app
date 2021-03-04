@@ -1,5 +1,6 @@
 {
   "picType": "png",
+  "theme": "dark",
   "baseShots": {
     "folder": "screenshot_testing/shots",
     "fileSuffix": "",

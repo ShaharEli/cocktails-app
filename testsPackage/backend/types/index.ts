@@ -16,12 +16,14 @@ interface PathConfig {
 }
 
 export interface Config {
+  theme: string;
   picType: string;
   baseShots: FolderConfig;
   newShots: FolderConfig;
 }
 
 export interface Configs {
+  theme: string;
   picType: string;
   base: PathConfig;
   newShots: PathConfig;

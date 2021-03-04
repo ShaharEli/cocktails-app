@@ -11,6 +11,7 @@
 <script>
 import axios from 'axios';
 import {globalStore} from './utils/globalState';
+const darkTheme = () => import('vue-material/dist/theme/default-dark.css');
 
 export default {
   data() {
@@ -20,23 +21,18 @@ export default {
     };
   },
 
-  methods: {
-    getDiffsFolders: (data) => {
-      // const dirs = {};
-      const diffsFiles = data.filter((files) => !!files.diff);
-      // diffsFiles.forEach(({baseFileName},i)=>{
-      //
-      // })
-      // data.map(e=>)
-      return diffsFiles;
-    },
-  },
   async mounted() {
     try {
       if (!globalStore.pics.length) {
-        const {data} = await axios.get('/diffs');
-        globalStore.pics = data;
-        this.getDiffsFolders(data);
+        const {
+          data: {pics: allPics, theme: appTheme},
+        } = await axios.get('/diffs');
+        console.log(appTheme);
+        if (appTheme === 'dark') {
+          darkTheme();
+        }
+        globalStore.pics = allPics;
+        globalStore.theme = appTheme;
       }
     } catch ({message}) {
       console.log(message);
@@ -55,7 +51,10 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
+.dark {
+  background-color: 'red';
+  /* @import 'vue-material/dist/theme/default-dark.css'; */
+}
 #nav {
   padding: 30px;
 }

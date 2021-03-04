@@ -9,6 +9,7 @@ const rootPath: string = path.resolve(process.cwd(), '../../');
 const getConfig = (): Configs => {
   const configJson = fs.readFileSync(rootPath + '/testsConfig.json');
   const {
+    theme,
     picType,
     baseShots: {
       folder: baseShotsFolder,
@@ -23,6 +24,7 @@ const getConfig = (): Configs => {
   }: // @ts-ignore
   Config = JSON.parse(configJson);
   return {
+    theme,
     picType,
     base: {
       path: path.resolve(rootPath, baseShotsFolder),
@@ -110,7 +112,8 @@ const getDiffs = () => {
 app.use(express.json());
 
 app.get('/diffs', (req: Request, res: Response) => {
-  res.json(getDiffs());
+  const {theme} = getConfig();
+  res.json({pics: getDiffs(), theme});
 });
 
 app.post('/approve', async (req: Request, res: Response) => {

@@ -53,6 +53,7 @@ export const fromDir = (
 
 export const sampleConfig = {
   picType: 'png',
+  theme: 'light',
   baseShots: {
     folder: 'screenshot_testing/shots',
     fileSuffix: '',
@@ -60,7 +61,7 @@ export const sampleConfig = {
   },
   newShots: {
     folder: 'screenshot_testing/temp',
-    fileSuffix: '-diff',
+    fileSuffix: '',
     ignoreSuffix: 'full',
   },
 };
