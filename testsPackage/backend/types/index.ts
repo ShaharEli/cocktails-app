@@ -10,6 +10,7 @@ interface PathConfig {
 }
 
 export interface Config {
+    picType: string,
     baseShots: FolderConfig,
     diffShots: FolderConfig
 }
