@@ -72,7 +72,11 @@ const getDiffs = () => {
 
 app.use(express.json());
 
-app.get('/', (req, res) => res.send('hello'));
+app.get('/', (req: Request, res: Response) => res.send('hello'));
+
+app.get('/diffs', (req: Request, res: Response) => {
+    res.json(getDiffs())
+})
 
 app.use(express.static('../client/build'));
 app.use(express.json());
