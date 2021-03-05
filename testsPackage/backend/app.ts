@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import {Config, Configs} from './types';
 import {fromDir, base64Encode, createDiffs} from './utils';
+import {execSync} from 'child_process';
 
 const rootPath: string = path.resolve(process.cwd(), '../../');
 
@@ -114,6 +115,16 @@ app.use(express.json());
 app.get('/theme', (req, res) => {
   const {theme} = getConfig();
   res.json({theme});
+});
+
+app.get('/brunches', (req, res) => {
+  const brunches = execSync('git branch -r')
+    .toString()
+    .split('\n')
+    .map((path) => path.trim().split('origin/')[1])
+    .filter((path) => path && !path.startsWith('HEAD'));
+  const currentBrunch = execSync('git rev-parse --abbrev-ref HEAD').toString();
+  res.json({brunches, currentBrunch});
 });
 
 app.get('/diffs', (req: Request, res: Response) => {

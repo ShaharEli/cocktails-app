@@ -34,6 +34,8 @@ export default {
       if (appTheme === 'dark') {
         useDarkTheme();
       }
+      const {data: brunches} = await axios.get('/brunches');
+      console.log(brunches);
       globalStore.theme = appTheme;
       if (!globalStore.pics.length) {
         const {
