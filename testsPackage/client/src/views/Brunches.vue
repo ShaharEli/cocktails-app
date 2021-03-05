@@ -35,10 +35,13 @@
 <script>
 import {globalStore} from '../utils/globalState';
 import axios from 'axios';
+import PicDisplayer from '../components/PicDisplayer';
 
 export default {
   name: 'Brunches',
-  components: {},
+  components: {
+    PicDisplayer,
+  },
   data() {
     return {
       info: globalStore.pics,
@@ -58,10 +61,8 @@ export default {
       this.activeBrunch = brunch;
       try {
         const {data: brunchDiffs} = await axios.get(`/brunch/${brunch}`);
-        console.log(brunchDiffs);
-        this.brunchDiffs = brunchDiffs;
+        this.brunchDiffs = brunchDiffs.pics;
       } catch ({message}) {
-        console.log(message);
       } finally {
         this.loading = false;
       }

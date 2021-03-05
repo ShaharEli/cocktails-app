@@ -70,7 +70,7 @@ export default {
         const {
           data: {success},
         } = await axios.post('/approve', {basePic, newShotsPic, rebase});
-        if (success) {
+        if (success && !rebase) {
           const {pics: allPics} = globalStore;
           globalStore.pics = allPics.filter(
             ({basePic: basePath, newShotsPic: newPath}) =>
