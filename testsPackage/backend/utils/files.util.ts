@@ -1,8 +1,10 @@
+import {execSync} from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import pixelMatch from 'pixelmatch';
 import {PNG} from 'pngjs';
 import {File} from '../types';
+import unzipper from 'unzipper';
 const tempDiffFolder = 'tempDiffFolder';
 const tempDiffFileName = 'tempDiff.png';
 const pathToTempDiffFolder = path.resolve(__dirname, '../', tempDiffFolder);
@@ -98,4 +100,16 @@ export const createDiffs = (
   } else {
     return null;
   }
+};
+
+const getBrunch = (name: string, folder: string) => {
+  // const basePath =
+  //   execSync('git config --get remote.origin.url').toString().slice(0, -4) +
+  //   '/tree/' +
+  //   name;
+  execSync(`git archive --output=archive-dev.zip  origin/${name}:${folder}`);
+  fs.createReadStream('path/to/archive.zip').pipe(
+    unzipper.Extract({path: 'output/path'}),
+  );
+  // git archive --output=archive-dev.zip  origin/screenshot-testing:screenshot_testing
 };
