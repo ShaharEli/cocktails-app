@@ -14,6 +14,14 @@
         </span>
       </div>
     </div>
+    <div v-if="brunchDiffs.length">
+      <div
+        v-for="diffs of brunchDiffs.filter((img) => !!img.diff)"
+        v-bind:key="diffs.basePic"
+      >
+        <PicDisplayer :data="diffs" />
+      </div>
+    </div>
     <div v-if="loading">
       <md-progress-spinner
         class="md-accent"
@@ -36,6 +44,7 @@ export default {
       info: globalStore.pics,
       activeBrunch: null,
       loading: false,
+      brunchDiffs: [],
     };
   },
   computed: {
@@ -50,6 +59,7 @@ export default {
       try {
         const {data: brunchDiffs} = await axios.get(`/brunch/${brunch}`);
         console.log(brunchDiffs);
+        this.brunchDiffs = brunchDiffs;
       } catch ({message}) {
         console.log(message);
       } finally {
