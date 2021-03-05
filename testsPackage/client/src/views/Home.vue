@@ -30,8 +30,9 @@ export default {
 </script>
 
 <style scoped >
-.images-container {
+.home {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 </style>

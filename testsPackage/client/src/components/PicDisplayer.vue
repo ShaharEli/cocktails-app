@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <span>{{ data.baseFileName }}</span>
+    <span class="file-name">{{ data.baseFileName }}</span>
     <div class="images-container">
       <img :style="imgStyle" v-bind:src="data.basePicFile" />
       <img :style="imgStyle" v-bind:src="data.diff.data" />
@@ -106,5 +106,11 @@ BUTTON.md-button
 .images-container {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.file-name {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 </style>

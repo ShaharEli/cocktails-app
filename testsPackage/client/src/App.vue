@@ -4,7 +4,12 @@
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
     </div>
-    <div v-if="loading">loading...</div>
+    <div v-if="loading">
+      <md-progress-spinner
+        class="md-accent"
+        md-mode="indeterminate"
+      ></md-progress-spinner>
+    </div>
     <router-view v-else />
   </div>
 </template>
@@ -48,11 +53,11 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /* color: #2c3e50; */
 }
 .dark {
   background-color: 'red';
@@ -64,7 +69,7 @@ export default {
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  margin-right: 10px;
 }
 
 #nav a.router-link-exact-active {
