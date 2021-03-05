@@ -112,6 +112,8 @@ const getDiffs = () => {
 
 app.use(express.json());
 
+// git show main:README.md > old_main.md
+
 app.get('/theme', (req, res) => {
   const {theme} = getConfig();
   res.json({theme});
