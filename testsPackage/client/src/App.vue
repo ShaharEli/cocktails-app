@@ -59,14 +59,10 @@ export default {
   text-align: center;
   /* color: #2c3e50; */
 }
-.dark {
-  background-color: 'red';
-  /* @import 'vue-material/dist/theme/default-dark.css'; */
-}
 #nav {
   padding: 30px;
+  font-size: 20px;
 }
-
 #nav a {
   font-weight: bold;
   margin-right: 10px;

@@ -2,9 +2,16 @@
   <div class="container">
     <span class="file-name">{{ data.baseFileName }}</span>
     <div class="images-container">
-      <img :style="imgStyle" v-bind:src="data.basePicFile" />
+      <div class="relative-container">
+        <span class="absolute-label">Base</span>
+        <img :style="imgStyle" v-bind:src="data.basePicFile" />
+      </div>
+
       <img :style="imgStyle" v-bind:src="data.diff.data" />
-      <img :style="imgStyle" v-bind:src="data.newShotsPicFile" />
+      <div class="relative-container">
+        <span class="absolute-label">New</span>
+        <img :style="imgStyle" v-bind:src="data.newShotsPicFile" />
+      </div>
       <div :style="imgStyle">
         <VueCompareImage
           :handleSize="20"
@@ -23,7 +30,7 @@
       >
     </div>
     <md-snackbar
-      :md-position="position"
+      md-position="center"
       :md-duration="3000"
       :md-active.sync="this.error"
       md-persistent
@@ -78,7 +85,6 @@ export default {
       }
     },
   },
-
   computed: {
     imgStyle() {
       const {
@@ -111,6 +117,15 @@ BUTTON.md-button
 }
 .file-name {
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 18px;
+}
+.absolute-label {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  text-shadow: -1px -1px 2px rgba(150, 150, 150, 0.54);
+}
+.relative-container {
+  position: relative;
 }
 </style>

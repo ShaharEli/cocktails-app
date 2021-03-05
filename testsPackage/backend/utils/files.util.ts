@@ -85,6 +85,7 @@ export const createDiffs = (
       threshold: 0.1,
     },
   );
+
   console.log('diffCount:', diffCount);
   if (diffCount > 0) {
     if (!fs.existsSync(pathToTempDiffFolder)) {
