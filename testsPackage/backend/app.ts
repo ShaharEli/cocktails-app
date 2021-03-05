@@ -10,6 +10,7 @@ import {
   rootPath,
 } from './utils';
 import {execSync} from 'child_process';
+import {diff} from 'react-native-reanimated';
 
 const getConfig = (): Configs => {
   const configJson = fs.readFileSync(rootPath + '/testsConfig.json');
@@ -130,7 +131,9 @@ app.get('/theme', (req, res) => {
 app.get('/brunch/:brunchName', async (req: Request, res: Response) => {
   try {
     const {brunchName} = req.params;
-    res.json({pics: getDiffs(brunchName)});
+    res.json({
+      pics: getDiffs(brunchName).map((files) => ({...files, rebase: true})),
+    });
   } catch ({message}) {
     res.json({success: false, message});
   }

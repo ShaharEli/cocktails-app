@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
+      <router-link to="/brunches">Brunches</router-link>
     </div>
     <div v-if="loading">
       <md-progress-spinner
@@ -21,7 +21,6 @@ const useDarkTheme = () => import('vue-material/dist/theme/default-dark.css');
 export default {
   data() {
     return {
-      localvar: globalStore.pics,
       loading: true,
     };
   },
@@ -35,8 +34,7 @@ export default {
         useDarkTheme();
       }
       const {data: brunches} = await axios.get('/brunches');
-      const {data: hi} = await axios.get(`/brunch/${brunches.brunches[3]}`);
-      console.log(hi);
+      globalStore.brunches = brunches;
       globalStore.theme = appTheme;
       if (!globalStore.pics.length) {
         const {

@@ -25,9 +25,9 @@
           md-mode="indeterminate"
         ></md-progress-spinner>
       </div>
-      <md-button v-else @click="handleClick" class="md-raised"
-        >Approve</md-button
-      >
+      <md-button v-else @click="handleClick" class="md-raised">{{
+        data.rebase ? 'Rebase' : 'Approve'
+      }}</md-button>
     </div>
     <md-snackbar
       md-position="center"
@@ -66,10 +66,10 @@ export default {
     async handleClick() {
       this.loading = true;
       try {
-        const {basePic, newShotsPic} = this.picsData;
+        const {basePic, newShotsPic, rebase = false} = this.picsData;
         const {
           data: {success},
-        } = await axios.post('/approve', {basePic, newShotsPic});
+        } = await axios.post('/approve', {basePic, newShotsPic, rebase});
         if (success) {
           const {pics: allPics} = globalStore;
           globalStore.pics = allPics.filter(
