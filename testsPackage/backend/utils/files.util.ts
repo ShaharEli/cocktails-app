@@ -122,8 +122,8 @@ export const getBrunchBaseline = (brunchName: string, folder: string) => {
   //   '/tree/' +
   //   name;
 
-  if (!fs.existsSync(pathToTempBrunchShotsFolder)) {
-    fs.unlinkSync(pathToTempBrunchShotsFolder);
+  if (fs.existsSync(pathToTempBrunchShotsFolder)) {
+    fs.rmdirSync(pathToTempBrunchShotsFolder, {recursive: true});
     fs.mkdirSync(pathToTempBrunchShotsFolder);
   }
   console.log(folder);
