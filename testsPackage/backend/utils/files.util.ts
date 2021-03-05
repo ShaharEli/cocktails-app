@@ -3,16 +3,30 @@ import fs from 'fs';
 import path from 'path';
 import pixelMatch from 'pixelmatch';
 import {PNG} from 'pngjs';
-import {File} from '../types';
+import {File, FirstIndicator} from '../types';
 import unzipper from 'unzipper';
+
 const tempDiffFolder = 'tempDiffFolder';
 const tempDiffFileName = 'tempDiff.png';
+const tempBrunchShotsFolder = 'tempBrunchShotsFolder';
+const brunchZipName = 'brunchZip';
+
+export const rootPath: string = path.resolve(process.cwd(), '../../');
+const pathTopZip = `${rootPath}/${brunchZipName}.zip`;
+
 const pathToTempDiffFolder = path.resolve(__dirname, '../', tempDiffFolder);
+const pathToTempBrunchShotsFolder = path.resolve(
+  __dirname,
+  '../',
+  tempBrunchShotsFolder,
+);
+
 const pathToTempDiffFile = path.resolve(pathToTempDiffFolder, tempDiffFileName);
+
 const baseArr: string[] = [];
 const newShotsArr: string[] = [];
+
 let current = 'base';
-type FirstIndicator = 'base' | 'newShots' | null;
 
 export const base64Encode = (file: string, picType: string) => {
   let bitmap = fs.readFileSync(file);
@@ -102,14 +116,24 @@ export const createDiffs = (
   }
 };
 
-const getBrunch = (name: string, folder: string) => {
+export const getBrunchBaseline = (brunchName: string, folder: string) => {
   // const basePath =
   //   execSync('git config --get remote.origin.url').toString().slice(0, -4) +
   //   '/tree/' +
   //   name;
-  execSync(`git archive --output=archive-dev.zip  origin/${name}:${folder}`);
-  fs.createReadStream('path/to/archive.zip').pipe(
-    unzipper.Extract({path: 'output/path'}),
+
+  if (!fs.existsSync(pathToTempBrunchShotsFolder)) {
+    fs.unlinkSync(pathToTempBrunchShotsFolder);
+    fs.mkdirSync(pathToTempBrunchShotsFolder);
+  }
+  execSync(
+    `cd ${rootPath} && git archive --output=${brunchZipName}.zip origin/${brunchName}:${folder}`,
   );
+  fs.createReadStream(pathTopZip).pipe(
+    unzipper.Extract({path: pathToTempBrunchShotsFolder}),
+  );
+  fs.unlinkSync(pathTopZip);
+
+  return pathToTempBrunchShotsFolder;
   // git archive --output=archive-dev.zip  origin/screenshot-testing:screenshot_testing
 };

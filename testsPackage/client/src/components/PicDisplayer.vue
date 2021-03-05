@@ -114,10 +114,10 @@ BUTTON.md-button
   flex-wrap: wrap;
   align-items: center;
   margin-bottom: 30px;
+  margin-top: 20px;
 }
 .file-name {
   font-size: 20px;
-  margin-bottom: 18px;
 }
 .absolute-label {
   position: absolute;

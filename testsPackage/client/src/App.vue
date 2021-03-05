@@ -35,7 +35,8 @@ export default {
         useDarkTheme();
       }
       const {data: brunches} = await axios.get('/brunches');
-      console.log(brunches);
+      const {data: hi} = await axios.get(`/brunch/${brunches.brunches[3]}`);
+      console.log(hi);
       globalStore.theme = appTheme;
       if (!globalStore.pics.length) {
         const {

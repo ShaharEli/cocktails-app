@@ -1,3 +1,5 @@
+import {type} from 'os';
+
 interface FolderConfig {
   folder: string;
   fileSuffix: string;
@@ -28,3 +30,12 @@ export interface Configs {
   base: PathConfig;
   newShots: PathConfig;
 }
+
+export interface Pics {
+  picType: string;
+  pics: string[] | null;
+}
+
+export type Brunch = string | null;
+
+export type FirstIndicator = 'base' | 'newShots' | null;
