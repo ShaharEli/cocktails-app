@@ -126,14 +126,15 @@ export const getBrunchBaseline = (brunchName: string, folder: string) => {
     fs.unlinkSync(pathToTempBrunchShotsFolder);
     fs.mkdirSync(pathToTempBrunchShotsFolder);
   }
+  console.log(folder);
+  const path = `${pathToTempBrunchShotsFolder}/${folder}`;
+
   execSync(
     `cd ${rootPath} && git archive --output=${brunchZipName}.zip origin/${brunchName}:${folder}`,
   );
-  fs.createReadStream(pathTopZip).pipe(
-    unzipper.Extract({path: pathToTempBrunchShotsFolder}),
-  );
+  fs.createReadStream(pathTopZip).pipe(unzipper.Extract({path}));
   fs.unlinkSync(pathTopZip);
 
-  return pathToTempBrunchShotsFolder;
+  return path;
   // git archive --output=archive-dev.zip  origin/screenshot-testing:screenshot_testing
 };

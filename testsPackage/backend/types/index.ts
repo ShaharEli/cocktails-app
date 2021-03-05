@@ -34,6 +34,7 @@ export interface Configs {
 export interface Pics {
   picType: string;
   pics: string[] | null;
+  pathToBrunch: string | null;
 }
 
 export type Brunch = string | null;

@@ -62,6 +62,7 @@ const getPics = (type: 'base' | 'newShots', brunch: Brunch): Pics => {
   return {
     pics: fromDir(pathToBaseline, `${filter}.${picType}`, ignoreSuffix, type),
     picType,
+    pathToBrunch: brunch ? pathToBaseline : null,
   };
 };
 
@@ -86,7 +87,7 @@ const getDiffs = (brunch: Brunch) => {
     newShots: {filter: newShotsFilter, path: newShotsPath},
     picType,
   } = getConfig();
-  const {pics: basePics} = getPics('base', brunch);
+  const {pics: basePics, pathToBrunch} = getPics('base', brunch);
   const {pics: newShotsPics} = getPics('newShots', null);
   if (!basePics || !newShotsPics) return [];
   const pairs = [];
@@ -96,7 +97,7 @@ const getDiffs = (brunch: Brunch) => {
         basePic,
         baseFilter,
         picType,
-        basePath,
+        pathToBrunch || basePath,
       );
       if (
         baseFileName ===
@@ -154,13 +155,18 @@ app.get('/diffs', (req: Request, res: Response) => {
 app.post('/approve', async (req: Request, res: Response) => {
   try {
     const {
-      body: {basePic, newShotsPic},
+      body: {basePic, newShotsPic, rebase = false},
     } = req;
     if (!fs.existsSync(basePic) || !fs.existsSync(newShotsPic)) {
       return res.json({success: false});
     }
-    fs.unlinkSync(basePic);
-    fs.renameSync(newShotsPic, basePic);
+    if (rebase) {
+      fs.unlinkSync(newShotsPic);
+      fs.renameSync(basePic, newShotsPic);
+    } else {
+      fs.unlinkSync(basePic);
+      fs.renameSync(newShotsPic, basePic);
+    }
     res.json({success: true});
   } catch ({message}) {
     res.json({success: false, message});
