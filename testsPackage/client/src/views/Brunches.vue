@@ -63,6 +63,7 @@ export default {
         const {data: brunchDiffs} = await axios.get(`/brunch/${brunch}`);
         this.brunchDiffs = brunchDiffs.pics;
       } catch ({message}) {
+        console.log(message);
       } finally {
         this.loading = false;
       }
