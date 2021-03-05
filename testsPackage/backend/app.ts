@@ -89,7 +89,7 @@ const getDiffs = (brunch: Brunch) => {
     picType,
   } = getConfig();
   const {pics: basePics, pathToBrunch} = getPics('base', brunch);
-  const {pics: newShotsPics} = getPics('newShots', null);
+  const {pics: newShotsPics} = getPics(brunch ? 'base' : 'newShots', null);
   if (!basePics || !newShotsPics) return [];
   const pairs = [];
   for (let basePic of basePics) {
