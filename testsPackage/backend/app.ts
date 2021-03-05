@@ -10,7 +10,6 @@ import {
   rootPath,
 } from './utils';
 import {execSync} from 'child_process';
-import {diff} from 'react-native-reanimated';
 
 const getConfig = (): Configs => {
   const configJson = fs.readFileSync(rootPath + '/testsConfig.json');
