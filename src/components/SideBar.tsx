@@ -1,39 +1,19 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {Switch} from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Feather';
 import IconTwo from 'react-native-vector-icons/FontAwesome5';
 import {SafeAreaView, View, TouchableOpacity, Text} from 'react-native';
-import {ThemeContext} from '../helpers';
+import {useTheme} from '../contexts/StyleProvider';
 
 export function SideBar({navigation}: {navigation: any}) {
-  //@ts-ignore
-  const {currentTheme, setCurrentTheme} = useContext<ThemeType>(ThemeContext);
+  const {toggleTheme, isDark} = useTheme();
 
-  const onToggleTheme = async (): Promise<void> => {
-    try {
-      switch (currentTheme) {
-        case 'light':
-          setCurrentTheme('dark');
-          await AsyncStorage.setItem('theme', 'dark');
-          break;
-        case 'dark':
-          setCurrentTheme('light');
-          await AsyncStorage.setItem('theme', 'light');
-          break;
-      }
-    } catch {}
-  };
+  const getToggleIconName = (): string => (isDark ? 'moon' : 'sun');
 
-  const getToggleIconName = (): string =>
-    currentTheme === 'dark' ? 'moon' : 'sun';
+  const getToggleIconColor = (): string => (isDark ? 'blue' : 'yellow');
 
-  const getToggleIconColor = (): string =>
-    currentTheme === 'dark' ? 'blue' : 'yellow';
-
-  const getRouteIconColor = (): string =>
-    currentTheme === 'dark' ? 'white' : 'black';
+  const getRouteIconColor = (): string => (isDark ? 'white' : 'black');
 
   const handleNavigation = (route: string): void => {
     switch (route) {
@@ -56,7 +36,7 @@ export function SideBar({navigation}: {navigation: any}) {
     <SideBarContainer>
       <ThemeToggle>
         {/* @ts-ignore */}
-        <Switch value={currentTheme === 'dark'} onValueChange={onToggleTheme} />
+        <Switch value={isDark} onValueChange={toggleTheme} />
         <Icon
           size={28}
           name={getToggleIconName()}

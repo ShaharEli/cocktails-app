@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {DrawerActions, NavigationContainer} from '@react-navigation/native';
@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/EvilIcons';
 import {ThemeType} from '../types';
 import {SideBar} from '../components';
 import {Home, Cocktail, Categories, CocktailsList} from '../screens';
-import {ThemeContext} from '../helpers';
+import {useTheme} from '../contexts';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -34,8 +34,7 @@ export function PublicRoutes() {
 }
 
 const MainStack = () => {
-  //@ts-ignore
-  const {currentTheme} = useContext(ThemeContext);
+  const {currentTheme} = useTheme();
 
   return (
     <Stack.Navigator>

@@ -1,13 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import SkeletonContent from 'react-native-skeleton-content-nonexpo';
-import {MAX_WIDTH, ThemeContext} from '../helpers';
+import {useTheme} from '../contexts';
+import {MAX_WIDTH} from '../helpers';
 
-export function CocktailSkelaton() {
-  //@ts-ignore
-  const {currentTheme} = useContext(ThemeContext);
-
-  const isDark: boolean = currentTheme === 'dark';
-
+export function CocktailSkeleton() {
+  const {isDark} = useTheme();
   return (
     <SkeletonContent
       isLoading={true}

@@ -14,7 +14,6 @@ export function CocktailCard({
   const handleNavigation = () =>
     navigation.navigate('Cocktail', {id: cocktail.idDrink});
   return (
-    // @ts-ignore
     <StyledCard onPress={handleNavigation}>
       <Card.Content>
         <StyledTitle>{cocktail.strDrink}</StyledTitle>

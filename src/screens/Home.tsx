@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import styled from 'styled-components';
 import {BASE_API_URL} from '../helpers';
-import {CocktailCard, CocktailSkelaton} from '../components';
+import {CocktailCard, CocktailSkeleton} from '../components';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
 import {ICocktail} from '../types';
@@ -71,8 +71,8 @@ export function Home({navigation}: {navigation: any}) {
             </Title>
             {loading && (
               <>
-                <CocktailSkelaton />
-                <CocktailSkelaton />
+                <CocktailSkeleton />
+                <CocktailSkeleton />
               </>
             )}
             {searchedCocktails.map((cocktail: ICocktail) => (
@@ -94,7 +94,7 @@ export function Home({navigation}: {navigation: any}) {
             {randomCocktail ? (
               <CocktailCard cocktail={randomCocktail} navigation={navigation} />
             ) : (
-              <CocktailSkelaton />
+              <CocktailSkeleton />
             )}
           </View>
         )}
