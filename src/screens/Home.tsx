@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native';
 import styled from 'styled-components';
-import {BASE_API_URL, MAX_WIDTH} from '../helpers';
+import {BASE_API_URL} from '../helpers';
 import {CocktailCard, CocktailSkelaton} from '../components';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
@@ -87,7 +87,8 @@ export function Home({navigation}: {navigation: any}) {
           <View>
             <TouchableOpacity onPress={handleFetchRandomCocktail}>
               <Title testID="title">
-              While you are thinking what cocktail you want heres random cocktail
+                While you are thinking what cocktail you want heres random
+                cocktail
               </Title>
             </TouchableOpacity>
             {randomCocktail ? (

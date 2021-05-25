@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import axios from 'axios';
 import {BASE_API_URL} from '../helpers';
-import {ICategorie} from '../types';
 import styled from 'styled-components';
 import {Info} from '../components';
 

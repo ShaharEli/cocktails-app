@@ -6,7 +6,7 @@ import axios from 'axios';
 import {ICocktail} from '../types';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export function Cocktail({navigation, route}: {navigation: any; route: any}) {
+export function Cocktail({route}: {route: any}) {
   const [cocktail, setCocktail] = useState<ICocktail | null>(null);
   const {id}: {id: string} = route.params;
   useEffect(() => {
