@@ -4,11 +4,11 @@ import {
   testScreenshot,
   api,
   HOME_SCREEN_FOLDER,
-  SLOW_DELAY,
   RANDOM_COCKTAIL_BTN,
   waitForElm,
   RANDOM_COCKTAIL_URL_SUFFIX,
   RANDOM_COCKTAIL,
+  WORKFLOW_SEARCHINPUT_DIFFCOUNT,
 } from './helpers';
 import {randomCocktailMockData1, randomCocktailMockData2} from './mocks';
 
@@ -28,7 +28,11 @@ describe('Home page tests', () => {
   it('Home page should be pixel perfect', async () => {
     await waitForElm(RANDOM_COCKTAIL);
     await expect(element(by.id(RANDOM_COCKTAIL))).toBeVisible();
-    await testScreenshot('mainPage', HOME_SCREEN_FOLDER, SLOW_DELAY);
+    await testScreenshot(
+      'mainPage',
+      HOME_SCREEN_FOLDER,
+      WORKFLOW_SEARCHINPUT_DIFFCOUNT,
+    );
   });
 
   it('Random cocktail button should change current cocktail', async () => {
@@ -41,6 +45,10 @@ describe('Home page tests', () => {
     await element(by.id(RANDOM_COCKTAIL_BTN)).tap();
     await waitForElm(RANDOM_COCKTAIL);
     await expect(element(by.id(RANDOM_COCKTAIL))).toBeVisible();
-    await testScreenshot('mainPage2', HOME_SCREEN_FOLDER, SLOW_DELAY);
+    await testScreenshot(
+      'mainPage2',
+      HOME_SCREEN_FOLDER,
+      WORKFLOW_SEARCHINPUT_DIFFCOUNT,
+    );
   });
 });

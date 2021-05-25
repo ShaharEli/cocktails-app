@@ -2,5 +2,5 @@
 const {execSync} = require('child_process');
 
 beforeAll(async () => {
-  execSync('xcrun simctl status_bar booted override --time "Givers"');
+  execSync('xcrun simctl status_bar booted override --time "Cocktails"');
 });
