@@ -52,13 +52,14 @@ export function Home({navigation}: {navigation: any}) {
     setSearchText(search);
     await handleSearchCocktail(search);
   };
+  console.log(process.env);
 
   return (
     <HomeContainer>
       <ScrollView>
         {/* @ts-ignore */}
         <StyledInput
-          label="Search drink"
+          label={'Search drink' + JSON.stringify(process.env)}
           value={searchText}
           testID="input"
           onChangeText={(text) => handleSearch(text)}
@@ -85,7 +86,9 @@ export function Home({navigation}: {navigation: any}) {
           </>
         ) : (
           <View>
-            <TouchableOpacity onPress={handleFetchRandomCocktail}>
+            <TouchableOpacity
+              testID="randomCocktailBtn"
+              onPress={handleFetchRandomCocktail}>
               <Title testID="title">
                 While you are thinking what cocktail you want heres random
                 cocktail
