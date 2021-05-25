@@ -8,14 +8,16 @@ import {View} from 'react-native';
 export function CocktailCard({
   cocktail,
   navigation,
+  testID,
 }: {
   cocktail: ICocktail;
+  testID?: string;
   navigation: any;
 }) {
   const handleNavigation = () =>
     navigation.navigate('Cocktail', {id: cocktail.idDrink});
   return (
-    <StyledCard onPress={handleNavigation}>
+    <StyledCard onPress={handleNavigation} testID={testID}>
       <Card.Content>
         <StyledTitle>{cocktail.strDrink}</StyledTitle>
         <ChipContainer>

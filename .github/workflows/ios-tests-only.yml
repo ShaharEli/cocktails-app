@@ -1,8 +1,8 @@
 name: Ios tests only
 
 on:
-  # push:
-  # branches: [main, screenshot-testing]
+  push:
+    branches: [main, screenshot-testing]
   pull_request:
     branches: [main, testing]
 jobs:

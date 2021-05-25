@@ -59,7 +59,7 @@ export function Home({navigation}: {navigation: any}) {
       <ScrollView>
         {/* @ts-ignore */}
         <StyledInput
-          label={'Search drink' + JSON.stringify(process.env)}
+          label={'Search drink'}
           value={searchText}
           testID="input"
           onChangeText={(text) => handleSearch(text)}
@@ -95,7 +95,11 @@ export function Home({navigation}: {navigation: any}) {
               </Title>
             </TouchableOpacity>
             {randomCocktail ? (
-              <CocktailCard cocktail={randomCocktail} navigation={navigation} />
+              <CocktailCard
+                testID="randomCocktail"
+                cocktail={randomCocktail}
+                navigation={navigation}
+              />
             ) : (
               <CocktailSkeleton />
             )}

@@ -1,6 +1,7 @@
 const {IN_TEST} = process.env;
 
 import {Dimensions} from 'react-native';
+
 export const BASE_API_URL = IN_TEST
   ? 'http://localhost:8000'
   : 'https://www.thecocktaildb.com/api/json/v1/1';
