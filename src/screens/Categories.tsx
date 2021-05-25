@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView} from 'react-native';
+import {SafeAreaView, ScrollView, ViewStyle} from 'react-native';
 import axios from 'axios';
 import {BASE_API_URL} from '../helpers';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ export function Categories({navigation, route}: {navigation: any; route: any}) {
 
   return (
     <CategoriesContainer>
-      <ScrollView contentContainerStyle={{alignItems: 'center'}}>
+      <ScrollView contentContainerStyle={ScrollViewStyle}>
         {categories &&
           categories.map((category: string) => (
             <Info
@@ -40,6 +40,7 @@ export function Categories({navigation, route}: {navigation: any; route: any}) {
     </CategoriesContainer>
   );
 }
+const ScrollViewStyle: ViewStyle = {alignItems: 'center'};
 
 const CategoriesContainer = styled(SafeAreaView)`
   flex: 1;

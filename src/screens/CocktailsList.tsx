@@ -2,9 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import styled from 'styled-components';
 import axios from 'axios';
-import {BASE_API_URL} from '../helpers';
+import {BASE_API_URL, LOADING_SKELETONS_NUM} from '../helpers';
 import {ICocktail} from '../types';
-import {CocktailCard, CocktailSkelaton} from '../components';
+import {CocktailCard, CocktailSkeleton} from '../components';
 
 export function CocktailsList({
   navigation,
@@ -34,20 +34,17 @@ export function CocktailsList({
   return (
     <Container>
       <ScrollView>
-        {loading ? (
-          <>
-            <CocktailSkelaton />
-            <CocktailSkelaton />
-          </>
-        ) : (
-          coctails.map((cocktail: ICocktail) => (
-            <CocktailCard
-              navigation={navigation}
-              cocktail={cocktail}
-              key={cocktail.idDrink}
-            />
-          ))
-        )}
+        {loading
+          ? new Array(LOADING_SKELETONS_NUM)
+              .fill(null)
+              .map(() => <CocktailSkeleton />)
+          : coctails.map((cocktail: ICocktail) => (
+              <CocktailCard
+                navigation={navigation}
+                cocktail={cocktail}
+                key={cocktail.idDrink}
+              />
+            ))}
       </ScrollView>
     </Container>
   );

@@ -46,7 +46,7 @@ export function Home({navigation}: {navigation: any}) {
     (async () => {
       await handleFetchRandomCocktail();
     })();
-  }, []);
+  }, [handleFetchRandomCocktail]);
 
   const handleSearch = async (search: string) => {
     setSearchText(search);

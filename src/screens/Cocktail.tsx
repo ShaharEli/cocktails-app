@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Text, ScrollView, Image} from 'react-native';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ViewStyle,
+} from 'react-native';
 import styled from 'styled-components';
 import {BASE_API_URL, MAX_WIDTH} from '../helpers';
 import axios from 'axios';
@@ -40,7 +47,6 @@ export function Cocktail({route}: {route: any}) {
   };
   return (
     <CocktailContainer>
-      {/* @ts-ignore */}
       <ScrollView contentContainerStyle={ScrollViewStyle}>
         {cocktail && (
           <>
@@ -100,7 +106,7 @@ const Label = styled(View)`
   margin-top: 20px;
 `;
 
-const ScrollViewStyle = {alignItems: 'center'};
+const ScrollViewStyle: ViewStyle = {alignItems: 'center'};
 
 const StyledImage = styled(Image)`
   width: ${MAX_WIDTH}px;
