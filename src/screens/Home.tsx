@@ -7,13 +7,13 @@ import {
   Text,
 } from 'react-native';
 import styled from 'styled-components';
-import {BASE_API_URL} from '../helpers';
+import {BASE_API_URL, LOADING_SKELETONS_NUM} from '../helpers';
 import {CocktailCard, CocktailSkeleton} from '../components';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
-import {ICocktail} from '../types';
+import {HomeScreenNavigationProp, ICocktail} from '../types';
 
-export function Home({navigation}: {navigation: any}) {
+export function Home({navigation}: {navigation: HomeScreenNavigationProp}) {
   const [searchText, setSearchText] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [randomCocktail, setRandomCocktail] = useState<ICocktail | null>(null);
@@ -52,7 +52,6 @@ export function Home({navigation}: {navigation: any}) {
     setSearchText(search);
     await handleSearchCocktail(search);
   };
-  console.log(process.env);
 
   return (
     <HomeContainer>
@@ -70,12 +69,12 @@ export function Home({navigation}: {navigation: any}) {
               {!loading && searchedCocktails.length} Search results for{' '}
               {searchText}:
             </Title>
-            {loading && (
-              <>
-                <CocktailSkeleton />
-                <CocktailSkeleton />
-              </>
-            )}
+            {loading &&
+              new Array(LOADING_SKELETONS_NUM)
+                .fill(null)
+                .map((_, i) => (
+                  <CocktailSkeleton key={`cocktailSkeleton${i}`} />
+                ))}
             {searchedCocktails.map((cocktail: ICocktail) => (
               <CocktailCard
                 key={cocktail.idDrink}

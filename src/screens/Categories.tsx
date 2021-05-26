@@ -4,8 +4,18 @@ import axios from 'axios';
 import {BASE_API_URL} from '../helpers';
 import styled from 'styled-components';
 import {Info} from '../components';
+import {
+  CategoriesScreenNavigationProp,
+  CategoriesScreenRouteProp,
+} from '../types';
 
-export function Categories({navigation, route}: {navigation: any; route: any}) {
+export function Categories({
+  navigation,
+  route,
+}: {
+  navigation: CategoriesScreenNavigationProp;
+  route: CategoriesScreenRouteProp;
+}) {
   const [categories, setCategories] = useState<string[]>([]);
   const {query}: {query: string} = route.params;
   useEffect(() => {

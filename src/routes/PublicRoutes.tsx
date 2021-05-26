@@ -3,12 +3,12 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {DrawerActions, NavigationContainer} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/EvilIcons';
-import {ThemeType} from '../types';
+import {RootStackParamList, ThemeType} from '../types';
 import {SideBar} from '../components';
 import {Home, Cocktail, Categories, CocktailsList} from '../screens';
 import {useTheme} from '../contexts';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
 
 const getHeaderStyle = (currentTheme: ThemeType) => ({

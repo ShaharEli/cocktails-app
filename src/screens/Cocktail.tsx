@@ -10,10 +10,10 @@ import {
 import styled from 'styled-components';
 import {BASE_API_URL, MAX_WIDTH} from '../helpers';
 import axios from 'axios';
-import {ICocktail} from '../types';
+import {CocktailScreenRouteProp, ICocktail} from '../types';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export function Cocktail({route}: {route: any}) {
+export function Cocktail({route}: {route: CocktailScreenRouteProp}) {
   const [cocktail, setCocktail] = useState<ICocktail | null>(null);
   const {id}: {id: string} = route.params;
   useEffect(() => {

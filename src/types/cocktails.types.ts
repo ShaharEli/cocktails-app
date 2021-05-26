@@ -1,5 +1,3 @@
-export type ThemeType = 'dark' | 'light';
-
 export interface ICocktail {
   idDrink: string;
   strDrink: string;
@@ -44,15 +42,3 @@ export interface ICategorie {
   strCategory?: string;
   strGlass?: string;
 }
-
-export interface IThemeContext {
-  setCurrentTheme: SetCurrentTheme;
-  currentTheme: ThemeType;
-}
-
-export interface ThemeHook {
-  currentTheme: ThemeType;
-  toggleTheme: () => Promise<void>;
-  isDark: boolean;
-}
-export type SetCurrentTheme = (theme: ThemeType) => void;
