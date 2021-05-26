@@ -11,18 +11,18 @@ import {
   WORKFLOW_SEARCHINPUT_DIFFCOUNT,
 } from './helpers';
 import {randomCocktailMockData1, randomCocktailMockData2} from './mocks';
-
 jest.setTimeout(440000);
+
 let randomCocktailMockApi;
 describe('Home page tests', () => {
   beforeAll(async () => {
+    await api.finishTest();
     randomCocktailMockApi = await api
       .nock(RANDOM_COCKTAIL_URL_SUFFIX)
       .method('get')
       .status(200)
       .send(randomCocktailMockData1);
     await device.reloadReactNative();
-    await api.finishTest();
   });
 
   it('Home page should be pixel perfect', async () => {

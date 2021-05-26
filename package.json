@@ -16,6 +16,7 @@
     "test-detox-ios": "detox test -c ios"
   },
   "dependencies": {
+    "10mock": "^1.0.11",
     "@react-native-async-storage/async-storage": "^1.13.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/drawer": "^5.11.4",
@@ -38,7 +39,6 @@
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
-    "10mock": "^1.0.4",
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
